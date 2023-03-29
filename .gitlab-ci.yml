@@ -7,7 +7,7 @@ stages:
 lint:
   stage: lint
   tags: 
-    - flutter
+    - frontend
   script:
     - flutter clean # Clear the cache
     - flutter pub get # Download dependencies
