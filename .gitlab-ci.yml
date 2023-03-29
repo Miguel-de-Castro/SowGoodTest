@@ -1,0 +1,15 @@
+default:
+  image: cirrusci/flutter:latest
+
+stages:
+  - lint
+
+lint:
+  stage: lint
+  tag: 
+    - flutter
+  script:
+    - flutter clean # Clear the cache
+    - flutter pub get # Download dependencies
+    - echo "Linting code... This will take a few seconds."
+    - flutter analyze
