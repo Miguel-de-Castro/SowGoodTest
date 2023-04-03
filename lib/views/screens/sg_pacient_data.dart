@@ -63,21 +63,18 @@ class _SGPacientSignInState extends State<SGPacientSignIn> {
                     controller: _alergiesController,
                     placeholder: 'Alergias',
                     icon: Icons.abc,
-                    condition: true,
                   ),
                   const SizedBox(height: 20),
                   SGTextArea(
                     controller: _medicationsController,
                     placeholder: 'Medicamentos',
                     icon: Icons.abc,
-                    condition: true,
                   ),
                   const SizedBox(height: 20),
                   SGTextArea(
                     controller: _observationsController,
                     placeholder: 'Observações',
                     icon: Icons.abc,
-                    condition: true,
                   ),
                   const SizedBox(height: 20),
                   Center(
