@@ -18,104 +18,81 @@ class _SGPacientSignInState extends State<SGPacientSignIn> {
   final TextEditingController _observationsController = TextEditingController();
   final TextEditingController _medicationsController = TextEditingController();
 
-  void _showDialog(BuildContext context, TextEditingController controller, IconData labelIcon,
-      String labelText) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: SGTextArea(
-              controller: controller, placeholder: labelText, icon: labelIcon),
-        );
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(3),
+            child: Container(
+              color: CustomColors.pacientPrimary,
+              height: 3,
+              width: double.infinity,
+            )),
         centerTitle: true,
         backgroundColor: CustomColors.white,
         title: Text(
           'Cadastro',
           style: CustomTextStylesBuilder()
               .withColor(CustomColors.black)
+              .withSize(26)
               .placeholder(),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 3,
-            width: double.infinity,
-            color: CustomColors.pacientPrimary,
-          ),
-          const SizedBox(
-            height: 160,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Center(
-              heightFactor: 1.0,
-              child: SizedBox(
-                width: 350,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Dados médicos',
-                        style: CustomTextStylesBuilder()
-                            .withColor(CustomColors.black)
-                            .placeholder(),
-                      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: SizedBox(
+            width: 350,
+            child: Form(
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(top: 100),
+                    child: Text(
+                      'Dados médicos',
+                      style: CustomTextStylesBuilder()
+                          .withColor(CustomColors.black)
+                          .withSize(28)
+                          .placeholder(),
                     ),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                        onTap: () => _showDialog(
-                            context, _alergiesController, Icons.abc,'Alergias'),
-                        child: SGTextArea(
-                          controller: _alergiesController,
-                          placeholder: 'Alergias',
-                          icon: Icons.abc,
-                          condition: false,
-                        )),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                        onTap: () => _showDialog(
-                            context, _medicationsController, Icons.abc,'Medicamentos'),
-                        child: SGTextArea(
-                          controller: _medicationsController,
-                          placeholder: 'Medicamentos',
-                          icon: Icons.abc,
-                          condition: false,
-                        )),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                        onTap: () => _showDialog(
-                            context, _observationsController, Icons.abc,'Observações'),
-                        child: SGTextArea(
-                          controller: _observationsController,
-                          placeholder: 'Observações',
-                          icon: Icons.abc,
-                          condition: false,
-                        )),
-                    const SizedBox(height: 20),
-                    Center(
-                        child: SGButton(
-                            onPressed: () {
-                              print(_alergiesController.text);
-                              print(_medicationsController.text);
-                              print(_observationsController.text);
-                            },
-                            text: 'Continuar')),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  SGTextArea(
+                    controller: _alergiesController,
+                    placeholder: 'Alergias',
+                    icon: Icons.abc,
+                    condition: true,
+                  ),
+                  const SizedBox(height: 20),
+                  SGTextArea(
+                    controller: _medicationsController,
+                    placeholder: 'Medicamentos',
+                    icon: Icons.abc,
+                    condition: true,
+                  ),
+                  const SizedBox(height: 20),
+                  SGTextArea(
+                    controller: _observationsController,
+                    placeholder: 'Observações',
+                    icon: Icons.abc,
+                    condition: true,
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                      child: VariableTextPinkButton(
+                          onPressed: () {
+                            print(_alergiesController.text);
+                            print(_medicationsController.text);
+                            print(_observationsController.text);
+                          },
+                          text: 'Continuar')),
+                ],
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
