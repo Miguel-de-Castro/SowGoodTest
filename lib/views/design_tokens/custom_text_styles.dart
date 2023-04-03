@@ -8,11 +8,12 @@ class CustomTextStyles {
 class CustomTextStylesBuilder {
   Color? _color;
   double? _height;
+  double? _fontSize = 16;
   TextDecoration? _decoration;
 
   TextStyle placeholder() {
     TextStyle style = GoogleFonts.roboto(
-      fontSize: 16,
+      fontSize: _fontSize,
       color: _color,
       height: _height,
       decoration: _decoration,
@@ -22,6 +23,11 @@ class CustomTextStylesBuilder {
 
   CustomTextStylesBuilder withColor(Color color){
     _color = color;
+    return this;
+  }
+
+  CustomTextStylesBuilder withSize(double size){
+    _fontSize = size;
     return this;
   }
 }
