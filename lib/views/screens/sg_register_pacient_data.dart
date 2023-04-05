@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sow_good/models/sg_pacient.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
-import 'package:sow_good/views/screens/telateste.dart';
 import 'package:sow_good/views/widgets/sg_button.dart';
 import 'package:sow_good/views/widgets/sg_text_area.dart';
 
