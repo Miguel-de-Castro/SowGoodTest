@@ -3,15 +3,14 @@ import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 
 class SGTextArea extends StatefulWidget {
-   SGTextArea(
+  SGTextArea(
       {super.key,
       required this.controller,
       required this.placeholder,
       required this.icon,
       this.initialText = '',
       this.maxLength = 0,
-      this.type = Type.multiline
-      });
+      this.type = Type.multiline});
 
   final String placeholder;
   final IconData icon;
@@ -24,10 +23,7 @@ class SGTextArea extends StatefulWidget {
   State<SGTextArea> createState() => _SGTextAreaState();
 }
 
-enum Type{
-  multiline,
-  oneline
-}
+enum Type { multiline, oneline }
 
 class _SGTextAreaState extends State<SGTextArea> {
   late TextEditingController _controller;
@@ -55,7 +51,8 @@ class _SGTextAreaState extends State<SGTextArea> {
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 5,top: 5,bottom: 5,right: 0),
+                padding:
+                    const EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 0),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Icon(widget.icon),
