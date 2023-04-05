@@ -89,4 +89,3 @@ class _SGTextAreaState extends State<SGTextArea> {
     );
   }
 }
-
