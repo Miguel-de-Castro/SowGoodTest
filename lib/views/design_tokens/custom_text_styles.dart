@@ -21,12 +21,12 @@ class CustomTextStylesBuilder {
     return style;
   }
 
-  CustomTextStylesBuilder withColor(Color color){
+  CustomTextStylesBuilder withColor(Color color) {
     _color = color;
     return this;
   }
 
-  CustomTextStylesBuilder withSize(double size){
+  CustomTextStylesBuilder withSize(double size) {
     _fontSize = size;
     return this;
   }
