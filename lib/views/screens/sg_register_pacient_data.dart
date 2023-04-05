@@ -4,20 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:sow_good/models/sg_pacient.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
-import 'package:sow_good/views/screens/telateste.dart';
 import 'package:sow_good/views/widgets/sg_button.dart';
 import 'package:sow_good/views/widgets/sg_text_area.dart';
 
 // ignore: must_be_immutable
 class SGPacientSignIn extends StatefulWidget {
-  SGPacientSignIn({super.key, required this.pacient});
-  SGPacient pacient;
+  SGPacientSignIn({super.key});
 
   @override
   _SGPacientSignInState createState() => _SGPacientSignInState();
 }
 
 class _SGPacientSignInState extends State<SGPacientSignIn> {
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController _alergiesController = TextEditingController();
   final TextEditingController _observationsController = TextEditingController();
   final TextEditingController _medicationsController = TextEditingController();
@@ -50,6 +49,7 @@ class _SGPacientSignInState extends State<SGPacientSignIn> {
             child: SizedBox(
               width: 350,
               child: Form(
+                key: _formkey,
                 child: Column(
                   // ignore: always_specify_types
                   children: [
@@ -68,29 +68,27 @@ class _SGPacientSignInState extends State<SGPacientSignIn> {
                     SGTextArea(
                       controller: _alergiesController,
                       placeholder: 'Alergias',
-                      icon: Icons.abc,
+                      icon: Icons.sick_outlined,
                     ),
                     const SizedBox(height: 20),
                     SGTextArea(
                       controller: _medicationsController,
                       placeholder: 'Medicamentos',
-                      icon: Icons.abc,
+                      icon: Icons.medication_outlined,
                     ),
                     const SizedBox(height: 20),
                     SGTextArea(
                       controller: _observationsController,
                       placeholder: 'Observações',
-                      icon: Icons.abc,
+                      icon: Icons.medical_information_outlined,
                     ),
                     const SizedBox(height: 20),
                     Center(
                         child: VariableTextPinkButton(
                             onPressed: () {
-                              widget.pacient.alergies = _alergiesController.text;
-                              widget.pacient.medications = _medicationsController.text;
-                              widget.pacient.observations = _observationsController.text;
-                              // ignore: always_specify_types
-                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TelaTeste(pacient: widget.pacient),));
+                              print(_alergiesController.text);
+                              print(_medicationsController.text);
+                              print(_observationsController.text);
                             },
                             text: 'Continuar')),
                   ],
