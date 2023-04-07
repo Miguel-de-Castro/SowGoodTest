@@ -18,7 +18,7 @@ class SGHealthInsurance extends StatelessWidget {
       child: Container(
         width: 350,
         height: 100,
-        color: CustomColors.background,
+        color: CustomColors.grayDivider,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -33,35 +33,36 @@ class SGHealthInsurance extends StatelessWidget {
                     .copyWith(decoration: TextDecoration.none),
               ),
             ),
-            List.generate()
-            ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemBuilder: (BuildContext context, int index) => Column(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.network(
-                      healthInsurances[index].image!,
-                      width: 40,
-                      height: 40,
+            Expanded(
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemBuilder: (BuildContext context, int index) => Column(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.network(
+                        healthInsurances[index].image!,
+                        width: 40,
+                        height: 40,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    healthInsurances[index].name!,
-                    textAlign: TextAlign.center,
-                    style: CustomTextStylesBuilder()
-                        .withSize(8)
-                        .withColor(CustomColors.black)
-                        .placeholder()
-                        .copyWith(decoration: TextDecoration.none),
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      healthInsurances[index].name!,
+                      textAlign: TextAlign.center,
+                      style: CustomTextStylesBuilder()
+                          .withSize(8)
+                          .withColor(CustomColors.black)
+                          .placeholder()
+                          .copyWith(decoration: TextDecoration.none),
+                    ),
+                  ],
+                ),
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(width: 16),
+                itemCount: healthInsurances.length,
               ),
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(width: 16),
-              itemCount: healthInsurances.length,
             ),
           ],
         ),
