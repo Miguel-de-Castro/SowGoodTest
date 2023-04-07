@@ -1,21 +1,20 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:sow_good/models/sg_pacient.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/widgets/sg_button.dart';
 import 'package:sow_good/views/widgets/sg_text_area.dart';
 
 // ignore: must_be_immutable
-class SGPacientSignIn extends StatefulWidget {
-  SGPacientSignIn({super.key});
+class SGResgisterPatientMedicalData extends StatefulWidget {
+  const SGResgisterPatientMedicalData({super.key});
 
   @override
-  _SGPacientSignInState createState() => _SGPacientSignInState();
+  _SGResgisterPatientMedicalDataState createState() => _SGResgisterPatientMedicalDataState();
 }
 
-class _SGPacientSignInState extends State<SGPacientSignIn> {
+class _SGResgisterPatientMedicalDataState extends State<SGResgisterPatientMedicalData> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController _alergiesController = TextEditingController();
   final TextEditingController _observationsController = TextEditingController();
@@ -51,8 +50,7 @@ class _SGPacientSignInState extends State<SGPacientSignIn> {
               child: Form(
                 key: _formkey,
                 child: Column(
-                  // ignore: always_specify_types
-                  children: [
+                  children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(top: 100),
