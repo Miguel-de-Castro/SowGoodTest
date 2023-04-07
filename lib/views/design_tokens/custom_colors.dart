@@ -8,5 +8,6 @@ class CustomColors {
   static const Color white = Color(0xffFFFFFF);
   static const Color graySubtitle = Color(0xff545454);
   static const Color grayDivider = Color(0xff6C6C6C);
-  static const Color background = Color(0xffD9D9D9);
+  static const Color background = Color(0xffffffff);
+  static const Color error = Color(0xFFC62828);
 }
