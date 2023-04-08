@@ -30,7 +30,6 @@ class SGTextArea extends StatefulWidget {
 enum Type { multiline, oneline, isPassword, isNormal }
 
 class _SGTextAreaState extends State<SGTextArea> {
-
   @override
   void initState() {
     super.initState();

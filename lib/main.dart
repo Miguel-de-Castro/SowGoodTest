@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/views/widgets/sg_app_bar.dart';
 import 'package:sow_good/views/widgets/sg_text_area.dart';
-import 'package:sow_good/views/widgets/button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -54,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 controller: controller,
                 placeholder: "test",
                 icon: Icons.abc,
+                textLenght: 10,
               ),
               const Text(
                 'You have pushed the button this many times:',
