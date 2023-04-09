@@ -47,7 +47,11 @@ class _RegisterPatientAccountState extends State<RegisterPatientAccount> {
 
   void nextScreen() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const RegisterPatientData(),));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const RegisterPatientData(),
+          ));
     }
   }
 
@@ -97,67 +101,68 @@ class _RegisterPatientAccountState extends State<RegisterPatientAccount> {
               vertical: displayHeight(context) * 0.1,
               horizontal: 20,
             ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Informações da conta',
-                        style: CustomTextStyles.title,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Informações da conta',
+                      style:
+                          CustomTextStylesBuilder().withSize(30).placeholder(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: displayHeight(context) * 0.55,
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _emailControl,
+                              validator: _emailValidator,
+                              placeholder: 'E-mail',
+                              icon: Icons.email_outlined,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _passwordControl,
+                              validator: _passwordValidator,
+                              placeholder: 'Senha',
+                              icon: Icons.lock_outline,
+                              isPassword: true,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _passwordConfirmControl,
+                              validator: _passwordConfirmValidator,
+                              placeholder: 'Confirmar senha',
+                              icon: Icons.lock_outline,
+                              isPassword: true,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: displayHeight(context) * 0.55,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: SGTextField(
-                            controller: _emailControl,
-                            validator: _emailValidator,
-                            placeholder: 'E-mail',
-                            icon: Icons.email_outlined,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: SGTextField(
-                            controller: _passwordControl,
-                            validator: _passwordValidator,
-                            placeholder: 'Senha',
-                            icon: Icons.lock_outline,
-                            isPassword: true,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: SGTextField(
-                            controller: _passwordConfirmControl,
-                            validator: _passwordConfirmValidator,
-                            placeholder: 'Confirmar senha',
-                            icon: Icons.lock_outline,
-                            isPassword: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                ),
+                VariableTextPinkButton(
+                  onPressed: () => nextScreen(),
+                  text: 'Continuar',
+                ),
+              ],
             ),
           ),
         ),
-      ),
-      resizeToAvoidBottomInset: false,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: displayHeight(context) * 0.065),
-        child: VariableTextPinkButton(text: 'Continuar', onPressed: nextScreen),
       ),
     );
   }

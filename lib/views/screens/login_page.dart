@@ -3,11 +3,12 @@ import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 import 'package:sow_good/views/widgets/button.dart';
-import 'package:sow_good/views/screens/register_patient_data.dart';
+import 'package:sow_good/views/screens/register_patient_account.dart';
 import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/services/patient_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sow_good/views/screens/profile_patient.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,51 +23,54 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String _userError = '';
   final List<dynamic> _patient = [];
-  final PatientService _patientService = PatientService(auth: FirebaseAuth.instance);
 
   double displayWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
-  void createAccount(){
+
+  void createAccount() {
     Navigator.push(
-            context,
-            MaterialPageRoute<RegisterPatientData>(
-                builder: (BuildContext context) => const RegisterPatientData()),
-          );
+      context,
+      MaterialPageRoute<RegisterPatientAccount>(
+          builder: (BuildContext context) => const RegisterPatientAccount()),
+    );
   }
 
   void signIn() async {
     if (_formKey.currentState!.validate()) {
-      setState((){
-            _userError = '';
-          });
+      setState(() {
+        _userError = '';
+      });
       try {
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
-        setState((){
+        print(userCredential.user!.uid);
+        setState(() {
           _emailController.text = '';
           _passwordController.text = '';
         });
+        PatientService().getPatients(userCredential.user!.uid);
         Navigator.push(
           context,
-          MaterialPageRoute<RegisterPatientData>(
-              builder: (BuildContext context) => const RegisterPatientData()),
+          MaterialPageRoute<ProfilePatient>(
+              builder: (BuildContext context) => const ProfilePatient()),
         );
       } on FirebaseAuthException catch (e) {
-       if (e.code == 'invalid-email') {
-          setState((){
+        if (e.code == 'invalid-email') {
+          setState(() {
             _userError = 'Email invalido';
           });
         }
-      if (e.code == 'user-not-found') {
-          setState((){
+        if (e.code == 'user-not-found') {
+          setState(() {
             _userError = 'Usuário não encontrado';
           });
         }
-      if (e.code == 'wrong-password') {
-          setState((){
+        if (e.code == 'wrong-password') {
+          setState(() {
             _userError = 'Sua senha esta incorreta';
           });
         }
@@ -74,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -175,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                                 _userError,
                                 style: const TextStyle(color: Colors.red),
                               ),
-                          ),
+                            ),
                         ]),
                       ),
                       Padding(

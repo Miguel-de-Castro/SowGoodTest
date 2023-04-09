@@ -1,7 +1,4 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 
 class PatientCard extends StatelessWidget {
@@ -12,9 +9,10 @@ class PatientCard extends StatelessWidget {
   final int age;
   final Color cardColor = CustomColors.pacientPrimary;
   final Color textColor = CustomColors.white;
-  var changed = false;
+  bool changed = false;
 
   PatientCard({
+    super.key,
     required this.name,
     required this.birthDate,
     required this.parents,
@@ -24,59 +22,59 @@ class PatientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textScale = MediaQuery.of(context).textScaleFactor;
-    var screenSize = MediaQuery.of(context).size * 0.21;
+    double textScale = MediaQuery.of(context).textScaleFactor;
+    Size screenSize = MediaQuery.of(context).size * 0.21;
     return Container(
-        child: FractionallySizedBox(
-            alignment: AlignmentDirectional.topStart,
-            widthFactor: 1, // between 0 and 1
-            heightFactor: 0.21,
-            child: Container(
-              width: 240,
-              height: 80,
-              color: cardColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.all(10),
-                      child: GestureDetector(
-                          child: CircleAvatar(
-                        radius: screenSize.height * 0.23,
-                        backgroundColor: CustomColors.white,
-                        child: CircleAvatar(
-                            radius: screenSize.height * 0.22,
-                            backgroundImage: NetworkImage(profilePictureUrl)),
-                      ))),
-                  SafeArea(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 0.14 * screenSize.height,
-                              color: textColor),
-                        ),
-                        Text(
-                          '$birthDate - $age anos',
-                          style: TextStyle(
-                              fontSize: 0.10 * screenSize.height,
-                              color: textColor),
-                        ),
-                        Text(
-                          'Resp. $parents',
-                          style: TextStyle(
-                              fontSize: 0.10 * screenSize.height,
-                              color: textColor),
-                        )
-                      ],
+      child: FractionallySizedBox(
+        alignment: AlignmentDirectional.topStart,
+        widthFactor: 1, // between 0 and 1
+        heightFactor: 0.41,
+        child: Container(
+          width: 240,
+          height: 80,
+          color: cardColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: GestureDetector(
+                      child: CircleAvatar(
+                    radius: screenSize.height * 0.23,
+                    backgroundColor: CustomColors.white,
+                    child: CircleAvatar(
+                        radius: screenSize.height * 0.22,
+                        backgroundImage: NetworkImage(profilePictureUrl)),
+                  ))),
+              SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 0.14 * screenSize.height,
+                          color: textColor),
                     ),
-                  )
-                ],
-              ),
-            )));
+                    Text(
+                      '$birthDate - $age anos',
+                      style: TextStyle(
+                          fontSize: 0.10 * screenSize.height, color: textColor),
+                    ),
+                    Text(
+                      'Resp. $parents',
+                      style: TextStyle(
+                          fontSize: 0.10 * screenSize.height, color: textColor),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

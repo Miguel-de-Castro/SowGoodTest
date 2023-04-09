@@ -21,7 +21,11 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
   void register() async {}
 
   void nextScreen() {
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const LoginPage(),));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const LoginPage(),
+        ));
   }
 
   double displayHeight(BuildContext context) {
@@ -40,107 +44,102 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: CustomColors.background,
-        appBar: AppBar(
-          leading: TextButton.icon(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 14,
-              color: CustomColors.black,
-            ),
-            label: Text(
-              'Voltar',
-              style: CustomTextStylesBuilder()
-                  .withSize(14)
-                  .withColor(CustomColors.black)
-                  .placeholder(),
-            ),
+    return Scaffold(
+      backgroundColor: CustomColors.background,
+      appBar: AppBar(
+        leading: TextButton.icon(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 14,
+            color: CustomColors.black,
           ),
-          leadingWidth: 80,
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(3),
-              child: Container(
-                color: CustomColors.pacientPrimary,
-                height: 3,
-                width: double.infinity,
-              )),
-          centerTitle: true,
-          backgroundColor: CustomColors.white,
-          title: Text(
-            'Cadastro',
+          label: Text(
+            'Voltar',
             style: CustomTextStylesBuilder()
+                .withSize(14)
                 .withColor(CustomColors.black)
-                .withSize(26)
-                .title(),
+                .placeholder(),
           ),
         ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: displayHeight(context) * 0.1, horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Responsáveis',
-                        style: CustomTextStyles.title,
-                      ),
+        leadingWidth: 80,
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(3),
+            child: Container(
+              color: CustomColors.pacientPrimary,
+              height: 3,
+              width: double.infinity,
+            )),
+        centerTitle: true,
+        backgroundColor: CustomColors.white,
+        title: Text(
+          'Cadastro',
+          style: CustomTextStylesBuilder()
+              .withColor(CustomColors.black)
+              .withSize(26)
+              .title(),
+        ),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: displayHeight(context) * 0.1, horizontal: 20),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Responsáveis',
+                      style: CustomTextStyles.title,
                     ),
                   ),
-                  SizedBox(
-                    height: displayHeight(context) * 0.55,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          Column(children: inputList()),
-                          TextButton.icon(
-                            onPressed: () {
-                              setState(() {
-                                _textControllers.add(TextEditingController());
-                              });
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              color: CustomColors.black,
-                            ),
-                            label: Text(
-                              'Adicionar responsável',
-                              style: CustomTextStylesBuilder()
-                                  .withSize(14)
-                                  .withColor(CustomColors.black)
-                                  .placeholder(),
-                            ),
-                            style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 10),
-                                tapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap),
+                ),
+                SizedBox(
+                  height: displayHeight(context) * 0.5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Column(children: inputList()),
+                        TextButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              _textControllers.add(TextEditingController());
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.add,
+                            color: CustomColors.black,
                           ),
-                        ],
-                      ),
+                          label: Text(
+                            'Adicionar responsável',
+                            style: CustomTextStylesBuilder()
+                                .withSize(14)
+                                .withColor(CustomColors.black)
+                                .placeholder(),
+                          ),
+                          style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: displayHeight(context) * 0.05,
+                ),
+                VariableTextPinkButton(
+                  onPressed: () => nextScreen(),
+                  text: 'Finalizar',
+                ),
+              ],
             ),
-          ),
-        ),
-        resizeToAvoidBottomInset: false,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: EdgeInsets.only(bottom: displayHeight(context) * 0.065),
-          child: VariableTextPinkButton(
-            onPressed: () => nextScreen(),
-            text: 'Finalizar',
           ),
         ),
       ),

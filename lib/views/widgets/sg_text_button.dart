@@ -18,7 +18,7 @@ class SGTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 350,
-      height: 42,
+      height: 50,
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: CustomColors.grayDivider)),
       ),
