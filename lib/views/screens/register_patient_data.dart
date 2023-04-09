@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
-import 'package:sow_good/views/screens/register_pacient_medical_data.dart';
+import 'package:sow_good/views/screens/register_patient_medical_data.dart';
 import 'package:sow_good/views/widgets/button.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 
 class RegisterPatientData extends StatefulWidget {
-  const RegisterPatientData({super.key});
+  final Patient patient;
+  const RegisterPatientData({super.key, required this.patient});
 
   @override
   State<RegisterPatientData> createState() => _RegisterPatientDataState();
@@ -36,12 +38,17 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
   }
 
   void nextScreen() {
+    // TODO: check not null validators BACKEND
     if (_formKey.currentState!.validate()) {
+      widget.patient.name = _nameControl.text;
+      widget.patient.cpf = _cpfControl.text.isEmpty ? '-' : _cpfControl.text;
+      widget.patient.sex = _sexControl.text;
+      widget.patient.birthDate = _birthdayControl.text;
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (BuildContext context) =>
-                const RegisterPatientMedicalData(),
+                RegisterPatientMedicalData(patient: widget.patient),
           ));
     }
   }
@@ -72,7 +79,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(3),
           child: Container(
-            color: CustomColors.pacientPrimary,
+            color: CustomColors.patientPrimary,
             height: 3,
             width: double.infinity,
           ),
@@ -99,7 +106,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
                   child: Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Dados do paciente',
+                      'Dados do patiente',
                       style:
                           CustomTextStylesBuilder().withSize(30).placeholder(),
                     ),
@@ -117,7 +124,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
                             child: SGTextField(
                               controller: _nameControl,
                               validator: TextValidator.validateRequired,
-                              placeholder: 'Nome completo do paciente',
+                              placeholder: 'Nome completo do patiente',
                               icon: Icons.person_outline,
                             ),
                           ),

@@ -7,7 +7,7 @@ class PatientCard extends StatelessWidget {
   final String parents;
   final String profilePictureUrl;
   final int age;
-  final Color cardColor = CustomColors.pacientPrimary;
+  final Color cardColor = CustomColors.patientPrimary;
   final Color textColor = CustomColors.white;
   bool changed = false;
 

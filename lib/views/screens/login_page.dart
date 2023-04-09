@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 right: 0,
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.3,
-                  color: CustomColors.pacientPrimary,
+                  color: CustomColors.patientPrimary,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const <Widget>[
@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(
                                   fontFamily: 'Roboto',
                                   fontSize: 28,
-                                  color: CustomColors.pacientPrimary,
+                                  color: CustomColors.patientPrimary,
                                   fontWeight: FontWeight.bold)),
                         ),
                       ),
@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                               text: 'Cadastre-se',
                               style: CustomTextStylesBuilder()
                                   .withSize(14)
-                                  .withColor(CustomColors.pacientPrimary)
+                                  .withColor(CustomColors.patientPrimary)
                                   .placeholder(),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
