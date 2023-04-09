@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
+import 'package:sow_good/views/screens/login_page.dart';
 import 'package:sow_good/views/widgets/button.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 
@@ -18,6 +19,10 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
       <TextEditingController>[];
 
   void register() async {}
+
+  void nextScreen() {
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const LoginPage(),));
+  }
 
   double displayHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
@@ -134,7 +139,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
         floatingActionButton: Padding(
           padding: EdgeInsets.only(bottom: displayHeight(context) * 0.065),
           child: VariableTextPinkButton(
-            onPressed: register,
+            onPressed: () => nextScreen(),
             text: 'Finalizar',
           ),
         ),

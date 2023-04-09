@@ -8,7 +8,6 @@ import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/services/patient_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sow_good/views/screens/register_patient_data.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,10 +18,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   String _userError = '';
-  List<dynamic> _patient = [];
+  final List<dynamic> _patient = [];
   final PatientService _patientService = PatientService(auth: FirebaseAuth.instance);
 
   double displayWidth(BuildContext context) {
@@ -46,19 +45,15 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailController.text,
           password: _passwordController.text,
         );
-        if(userCredential != null){
-          print(userCredential.user!.uid);
-          setState((){
-            _emailController.text = '';
-            _passwordController.text = '';
-          });
-          _patientService.getPatients(userCredential.user!.uid);
-          Navigator.push(
-            context,
-            MaterialPageRoute<RegisterPatientData>(
-                builder: (BuildContext context) => const RegisterPatientData()),
-          );
-        }
+        setState((){
+          _emailController.text = '';
+          _passwordController.text = '';
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute<RegisterPatientData>(
+              builder: (BuildContext context) => const RegisterPatientData()),
+        );
       } on FirebaseAuthException catch (e) {
        if (e.code == 'invalid-email') {
           setState((){
@@ -178,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Text(
                                 _userError,
-                                style: TextStyle(color: Colors.red),
+                                style: const TextStyle(color: Colors.red),
                               ),
                           ),
                         ]),

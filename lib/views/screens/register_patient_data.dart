@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
+import 'package:sow_good/views/screens/register_pacient_medical_data.dart';
 import 'package:sow_good/views/widgets/button.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 
@@ -35,7 +36,9 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
   }
 
   void nextScreen() {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const RegisterPatientMedicalData(),));
+    }
   }
 
   @override
