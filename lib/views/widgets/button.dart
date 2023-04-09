@@ -18,7 +18,7 @@ class VariableTextPinkButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: CustomColors.pacientPrimary,
+        backgroundColor: CustomColors.patientPrimary,
         minimumSize: const Size(200, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),

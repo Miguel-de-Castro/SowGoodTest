@@ -64,7 +64,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                 ),
                 const Divider(
                   thickness: 2,
-                  color: CustomColors.pacientPrimary,
+                  color: CustomColors.patientPrimary,
                 ),
                 Column(
                   children: <Widget>[

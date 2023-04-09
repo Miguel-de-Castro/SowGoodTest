@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
@@ -18,6 +19,7 @@ class _RegisterPatientAccountState extends State<RegisterPatientAccount> {
   final TextEditingController _passwordControl = TextEditingController();
   final TextEditingController _passwordConfirmControl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late Patient patient;
 
   String? _emailValidator(String? email) {
     String? error = TextValidator.validateRequired(email);
@@ -47,10 +49,13 @@ class _RegisterPatientAccountState extends State<RegisterPatientAccount> {
 
   void nextScreen() {
     if (_formKey.currentState!.validate()) {
+      patient =
+          Patient(password: _passwordControl.text, email: _emailControl.text);
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => const RegisterPatientData(),
+            builder: (BuildContext context) =>
+                RegisterPatientData(patient: patient),
           ));
     }
   }
@@ -80,7 +85,7 @@ class _RegisterPatientAccountState extends State<RegisterPatientAccount> {
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(3),
             child: Container(
-              color: CustomColors.pacientPrimary,
+              color: CustomColors.patientPrimary,
               height: 3,
               width: double.infinity,
             )),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/screens/profile_doctor.dart';
-import 'package:sow_good/views/widgets/pacient_profile_card.dart';
+import 'package:sow_good/views/widgets/patient_profile_card.dart';
 import 'package:sow_good/views/widgets/sg_text_button.dart';
 
 class ProfilePatient extends StatefulWidget {
@@ -48,13 +48,13 @@ class _ProfilePatientState extends State<ProfilePatient> {
                 SGTextButton(
                   onPressed: () {},
                   title: 'Diário',
-                  subTitle: 'Evolução do paciente',
+                  subTitle: 'Evolução do patiente',
                   icon: Icons.menu_book_outlined,
                 ),
                 SGTextButton(
                   onPressed: () {},
                   title: 'Dados médicos',
-                  subTitle: 'Evolução do paciente',
+                  subTitle: 'Evolução do patiente',
                   icon: Icons.list_alt_outlined,
                 ),
                 SGTextButton(

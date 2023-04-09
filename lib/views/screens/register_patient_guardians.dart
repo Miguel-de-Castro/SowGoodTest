@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sow_good/models/patient.dart';
+import 'package:sow_good/services/patient_service.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/screens/login_page.dart';
@@ -7,7 +9,8 @@ import 'package:sow_good/views/widgets/sg_text_field.dart';
 
 class RegisterPatientGuardians extends StatefulWidget {
   static const String routeName = '/registerGuardians';
-  const RegisterPatientGuardians({super.key});
+  final Patient patient;
+  const RegisterPatientGuardians({super.key, required this.patient});
 
   @override
   State<RegisterPatientGuardians> createState() =>
@@ -20,7 +23,12 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
 
   void register() async {}
 
-  void nextScreen() {
+  void nextScreen() async {
+    widget.patient.guardians = [];
+    for (TextEditingController guardiansController in _textControllers) {
+      widget.patient.guardians!.add(guardiansController.text);
+    }
+    String uidAuth = await PatientService().postPatients(widget.patient);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -68,7 +76,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(3),
             child: Container(
-              color: CustomColors.pacientPrimary,
+              color: CustomColors.patientPrimary,
               height: 3,
               width: double.infinity,
             )),
