@@ -3,7 +3,6 @@ import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/widgets/button.dart';
-import 'package:sow_good/views/widgets/sg_text_area.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 
 class RegisterPatientData extends StatefulWidget {
@@ -14,6 +13,10 @@ class RegisterPatientData extends StatefulWidget {
 }
 
 class _RegisterPatientDataState extends State<RegisterPatientData> {
+  final TextEditingController _nameControl = TextEditingController();
+  final TextEditingController _cpfControl = TextEditingController();
+  final TextEditingController _sexControl = TextEditingController();
+  final TextEditingController _birthdayControl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _cpfValidator(String? cpf) {
@@ -89,7 +92,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: SGTextField(
-                  controller: TextEditingController(),
+                  controller: _nameControl,
                   validator: TextValidator.validateRequired,
                   placeholder: 'Nome completo do paciente',
                   icon: Icons.person_outline,
@@ -98,7 +101,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: SGTextField(
-                  controller: TextEditingController(),
+                  controller: _cpfControl,
                   validator: _cpfValidator,
                   placeholder: 'CPF',
                   icon: Icons.person_outline,
@@ -107,7 +110,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: SGTextField(
-                  controller: TextEditingController(),
+                  controller: _sexControl,
                   validator: TextValidator.validateRequired,
                   placeholder: 'Sexo',
                   icon: Icons.person_outline,
@@ -116,7 +119,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: SGTextField(
-                  controller: TextEditingController(),
+                  controller: _birthdayControl,
                   validator: TextValidator.validateRequired,
                   placeholder: 'Data de nascimento',
                   icon: Icons.calendar_month,
