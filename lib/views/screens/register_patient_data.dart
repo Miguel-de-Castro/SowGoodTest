@@ -37,33 +37,46 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
 
   void nextScreen() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const RegisterPatientMedicalData(),));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) =>
+                const RegisterPatientMedicalData(),
+          ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: CustomColors.black,
-          ),
+        leading: TextButton.icon(
           onPressed: () {
             Navigator.pop(context);
           },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 14,
+            color: CustomColors.black,
+          ),
+          label: Text(
+            'Voltar',
+            style: CustomTextStylesBuilder()
+                .withSize(14)
+                .withColor(CustomColors.black)
+                .placeholder(),
+          ),
         ),
+        leadingWidth: 80,
         bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(3),
-            child: Container(
-              color: CustomColors.pacientPrimary,
-              height: 3,
-              width: double.infinity,
-            )),
+          preferredSize: const Size.fromHeight(3),
+          child: Container(
+            color: CustomColors.pacientPrimary,
+            height: 3,
+            width: double.infinity,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: CustomColors.white,
         title: Text(
@@ -75,73 +88,81 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
         ),
       ),
       body: Center(
+        child: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: 20, vertical: displayHeight(context) * 0.2),
-        child: Column(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Dados do paciente',
-                style: CustomTextStylesBuilder().withSize(30).placeholder(),
-              ),
+            padding: EdgeInsets.symmetric(
+                vertical: displayHeight(context) * 0.1, horizontal: 20),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Dados do paciente',
+                      style:
+                          CustomTextStylesBuilder().withSize(30).placeholder(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: displayHeight(context) * 0.55,
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _nameControl,
+                              validator: TextValidator.validateRequired,
+                              placeholder: 'Nome completo do paciente',
+                              icon: Icons.person_outline,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _cpfControl,
+                              validator: _cpfValidator,
+                              placeholder: 'CPF',
+                              icon: Icons.person_outline,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _sexControl,
+                              validator: TextValidator.validateRequired,
+                              placeholder: 'Sexo',
+                              icon: Icons.person_outline,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SGTextField(
+                              controller: _birthdayControl,
+                              validator: TextValidator.validateRequired,
+                              placeholder: 'Data de nascimento',
+                              icon: Icons.calendar_month,
+                              type: FieldType.date,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                VariableTextPinkButton(
+                  onPressed: () => nextScreen(),
+                  text: 'Continuar',
+                ),
+              ],
             ),
           ),
-          Form(
-            key: _formKey,
-            child: Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: SGTextField(
-                  controller: _nameControl,
-                  validator: TextValidator.validateRequired,
-                  placeholder: 'Nome completo do paciente',
-                  icon: Icons.person_outline,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: SGTextField(
-                  controller: _cpfControl,
-                  validator: _cpfValidator,
-                  placeholder: 'CPF',
-                  icon: Icons.person_outline,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: SGTextField(
-                  controller: _sexControl,
-                  validator: TextValidator.validateRequired,
-                  placeholder: 'Sexo',
-                  icon: Icons.person_outline,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: SGTextField(
-                  controller: _birthdayControl,
-                  validator: TextValidator.validateRequired,
-                  placeholder: 'Data de nascimento',
-                  icon: Icons.calendar_month,
-                  type: FieldType.date,
-                ),
-              ),
-            ]),
-          )
-        ]),
-      )),
-      resizeToAvoidBottomInset: false,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: displayHeight(context) * 0.065),
-        child: VariableTextPinkButton(
-          onPressed: nextScreen,
-          text: 'Continuar',
         ),
       ),
-    ));
+    );
   }
 }

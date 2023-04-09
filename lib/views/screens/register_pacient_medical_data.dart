@@ -125,19 +125,14 @@ class _RegisterPatientMedicalDataState
                       ],
                     ),
                   ),
-                )
+                ),
+                VariableTextPinkButton(
+                  onPressed: () => nextScreen(),
+                  text: 'Continuar',
+                ),
               ],
             ),
           ),
-        ),
-      ),
-      resizeToAvoidBottomInset: false,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: displayHeight(context) * 0.065),
-        child: VariableTextPinkButton(
-          onPressed: () => nextScreen(),
-          text: 'Continuar',
         ),
       ),
     );
