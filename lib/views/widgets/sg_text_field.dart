@@ -35,6 +35,7 @@ class SGTextField extends StatefulWidget {
 class _SGTextFieldState extends State<SGTextField> {
   bool error = false;
   String? errorMessage;
+  bool isVisible = true;
 
   String? _validateInput(String? value) {
     if (widget.validator != null) {
@@ -105,6 +106,7 @@ class _SGTextFieldState extends State<SGTextField> {
       controller: widget.controller,
       validator: _validateInput,
       maxLines: 1,
+      obscureText: widget.isPassword ? isVisible : widget.isPassword,
       decoration: InputDecoration(
         prefixIcon: Icon(
           widget.icon,
@@ -119,7 +121,25 @@ class _SGTextFieldState extends State<SGTextField> {
                   color: CustomColors.black,
                 ),
               )
-            : null,
+            : widget.isPassword
+                ? IconButton(
+                    tooltip: isVisible ? 'mostrar senha' : 'esconder senha',
+                    onPressed: () {
+                      setState(() {
+                        isVisible = !isVisible;
+                      });
+                    },
+                    icon: isVisible
+                        ? const Icon(
+                            Icons.visibility,
+                            color: CustomColors.black,
+                          )
+                        : const Icon(
+                            Icons.visibility_off,
+                            color: CustomColors.black,
+                          ),
+                  )
+                : null,
         hintText: widget.placeholder,
         hintStyle: CustomTextStylesBuilder()
             .withColor(CustomColors.graySubtitle)
