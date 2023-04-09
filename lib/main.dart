@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sow_good/views/screens/profile-patient.dart';
 import 'package:sow_good/views/widgets/sg_app_bar.dart';
 import 'package:sow_good/views/widgets/sg_text_area.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'views/screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +15,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {

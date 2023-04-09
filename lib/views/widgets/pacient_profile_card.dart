@@ -26,8 +26,7 @@ class PatientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var textScale = MediaQuery.of(context).textScaleFactor;
     var screenSize = MediaQuery.of(context).size * 0.21;
-    return Material(
-        type: MaterialType.transparency,
+    return Container(
         child: FractionallySizedBox(
             alignment: AlignmentDirectional.topStart,
             widthFactor: 1, // between 0 and 1
@@ -43,10 +42,10 @@ class PatientCard extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       child: GestureDetector(
                           child: CircleAvatar(
-                        radius: screenSize.height * 0.335,
+                        radius: screenSize.height * 0.23,
                         backgroundColor: CustomColors.white,
                         child: CircleAvatar(
-                            radius: screenSize.height * 0.32,
+                            radius: screenSize.height * 0.22,
                             backgroundImage: NetworkImage(profilePictureUrl)),
                       ))),
                   SafeArea(
@@ -58,19 +57,19 @@ class PatientCard extends StatelessWidget {
                           name,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 0.17 * screenSize.height,
+                              fontSize: 0.14 * screenSize.height,
                               color: textColor),
                         ),
                         Text(
                           '$birthDate - $age anos',
                           style: TextStyle(
-                              fontSize: 0.135 * screenSize.height,
+                              fontSize: 0.10 * screenSize.height,
                               color: textColor),
                         ),
                         Text(
                           'Resp. $parents',
                           style: TextStyle(
-                              fontSize: 0.135 * screenSize.height,
+                              fontSize: 0.10 * screenSize.height,
                               color: textColor),
                         )
                       ],
