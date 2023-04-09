@@ -14,27 +14,12 @@ class SGHealthInsurance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 115,
+      height: 75,
       width: 350,
       alignment: Alignment.topLeft,
-      decoration: const BoxDecoration(
-        color: CustomColors.background,
-        border: Border(
-          bottom: BorderSide(
-            color: CustomColors.grayDivider,
-          ),
-        ),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Text(
-              'Convênios',
-              style: CustomTextStylesBuilder().withSize(12).title(),
-            ),
-          ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
