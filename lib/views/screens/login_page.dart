@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _userError = '';
-  final List<dynamic> _patient = [];
+  Map<String, dynamic> _patient = {};
 
   double displayWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -47,17 +47,22 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailController.text,
           password: _passwordController.text,
         );
-        print(userCredential.user!.uid);
         setState(() {
           _emailController.text = '';
           _passwordController.text = '';
         });
-        PatientService().getPatients(userCredential.user!.uid);
-        Navigator.push(
-          context,
-          MaterialPageRoute<ProfilePatient>(
-              builder: (BuildContext context) => const ProfilePatient()),
-        );
+        _patient = await PatientService().getPatient(userCredential.user!.uid) ?? {};
+            if (_patient.isNotEmpty) {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfilePatient>(
+                    builder: (BuildContext context) => const ProfilePatient()),
+              );
+            } else {
+              setState(() {
+                _userError = 'Apenas para pacientes';
+              });
+            }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-email') {
           setState(() {
