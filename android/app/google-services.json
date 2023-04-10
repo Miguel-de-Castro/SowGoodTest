@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1047671029557",
+    "project_id": "sow-good",
+    "storage_bucket": "sow-good.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047671029557:android:221f8bb56475cf3386967c",
+        "android_client_info": {
+          "package_name": "com.example.sow_good"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047671029557-j66ij3o8u51ckef13r95dr7i2nsgub6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVVOQWjcbgsC5lH8aRSujdwkjRPMSlfJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047671029557-j66ij3o8u51ckef13r95dr7i2nsgub6o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1047671029557-rva0miq0in56p432vtjmg0kbrk71m5qj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sowGood"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
