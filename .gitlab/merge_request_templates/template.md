@@ -10,7 +10,9 @@ Uma lista das mudanças relacionadas a esse MR
 - Mudanca 2
 
 ### Checklist:
+<!-- PODE CRIAR OUTROS QUE SENTIR NECESSÁRIO -->
 
+* [ ] Mover a task para review
 * [ ] Não deixou string literais no código
 * [ ] Utilizou as variáveis padronizadas do design system (cor, títulos/fontes, imagens e etc)
 * [ ] Não deixou nenhum código comentado
