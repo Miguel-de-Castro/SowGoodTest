@@ -32,6 +32,13 @@ migrate_working_dir/
 .pub/
 /build/
 pubspec.lock
+**/android/**/GeneratedPluginRegistrant.java
+**/ios/**/GeneratedPluginRegistrant.*
+**/macos/**/GeneratedPluginRegistrant.*
+**/linux/**/generated_plugin_registrant.*
+**/windows/**/generated_plugin_registrant.*
+**/linux/**/generated_plugins.*
+**/windows/**/generated_plugins.*
 
 # Symbolication related
 app.*.symbols
