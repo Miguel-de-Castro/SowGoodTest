@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
+import 'package:sow_good/views/widgets/sg_loader.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 import 'package:sow_good/views/widgets/button.dart';
 import 'package:sow_good/views/screens/register_patient_account.dart';
@@ -36,12 +37,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  bool isLoading = false;
+
+  void loadData() {
+    isLoading ? Navigator.pop(context) : _dialogBuilder(context);
+    isLoading = !isLoading;
+  }
+
   void signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _userError = '';
       });
       try {
+        loadData();
         UserCredential userCredential =
             await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text,
@@ -51,30 +60,36 @@ class _LoginPageState extends State<LoginPage> {
           _emailController.text = '';
           _passwordController.text = '';
         });
-        _patient = await PatientService().getPatient(userCredential.user!.uid) ?? {};
-            if (_patient.isNotEmpty) {
-              Navigator.push(
-                context,
-                MaterialPageRoute<ProfilePatient>(
-                    builder: (BuildContext context) => const ProfilePatient()),
-              );
-            } else {
-              setState(() {
-                _userError = 'Apenas para pacientes';
-              });
-            }
+        _patient =
+            await PatientService().getPatient(userCredential.user!.uid) ?? {};
+        if (_patient.isNotEmpty) {
+          loadData();
+          Navigator.push(
+            context,
+            MaterialPageRoute<ProfilePatient>(
+                builder: (BuildContext context) => const ProfilePatient()),
+          );
+        } else {
+          setState(() {
+            loadData();
+            _userError = 'Apenas para pacientes';
+          });
+        }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-email') {
+          loadData();
           setState(() {
             _userError = 'Email invalido';
           });
         }
         if (e.code == 'user-not-found') {
+          loadData();
           setState(() {
             _userError = 'Usuário não encontrado';
           });
         }
         if (e.code == 'wrong-password') {
+          loadData();
           setState(() {
             _userError = 'Sua senha esta incorreta';
           });
@@ -188,10 +203,9 @@ class _LoginPageState extends State<LoginPage> {
                         ]),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 34),
-                        child: VariableTextPinkButton(
-                            text: 'Entrar', onPressed: signIn),
-                      ),
+                          padding: const EdgeInsets.only(bottom: 34),
+                          child: VariableTextPinkButton(
+                              text: 'Entrar', onPressed: () => signIn())),
                       RichText(
                         text: TextSpan(
                           text: 'Não possui uma conta? ',
@@ -213,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -223,5 +237,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return sgLoader();
+        });
   }
 }
