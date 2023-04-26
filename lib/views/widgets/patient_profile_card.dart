@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
+import 'package:sow_good/views/widgets/sg_logout_button.dart';
 
 class PatientCard extends StatelessWidget {
   final String name;
@@ -33,44 +34,63 @@ class PatientCard extends StatelessWidget {
           width: 240,
           height: 80,
           color: cardColor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Stack(
             children: [
-              Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: GestureDetector(
-                      child: CircleAvatar(
-                    radius: screenSize.height * 0.23,
-                    backgroundColor: CustomColors.white,
-                    child: CircleAvatar(
-                        radius: screenSize.height * 0.22,
-                        backgroundImage: NetworkImage(profilePictureUrl)),
-                  ))),
-              SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 0.14 * screenSize.height,
-                          color: textColor),
-                    ),
-                    Text(
-                      '$birthDate - $age anos',
-                      style: TextStyle(
-                          fontSize: 0.10 * screenSize.height, color: textColor),
-                    ),
-                    Text(
-                      'Resp. $parents',
-                      style: TextStyle(
-                          fontSize: 0.10 * screenSize.height, color: textColor),
-                    )
-                  ],
+              Positioned(
+                top: 20,
+                right: 25,
+                child: SGLogoutButton(
+                  onPressed: () {},
                 ),
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: GestureDetector(
+                      child: CircleAvatar(
+                        radius: screenSize.height * 0.23,
+                        backgroundColor: CustomColors.white,
+                        child: CircleAvatar(
+                          radius: screenSize.height * 0.22,
+                          backgroundImage: NetworkImage(profilePictureUrl),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SafeArea(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 0.14 * screenSize.height,
+                            color: textColor,
+                          ),
+                        ),
+                        Text(
+                          '$birthDate - $age anos',
+                          style: TextStyle(
+                            fontSize: 0.10 * screenSize.height,
+                            color: textColor,
+                          ),
+                        ),
+                        Text(
+                          'Resp. $parents',
+                          style: TextStyle(
+                            fontSize: 0.10 * screenSize.height,
+                            color: textColor,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),

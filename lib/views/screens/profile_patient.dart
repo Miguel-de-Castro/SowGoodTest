@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/screens/profile_doctor.dart';
 import 'package:sow_good/views/widgets/patient_profile_card.dart';
@@ -48,20 +49,19 @@ class _ProfilePatientState extends State<ProfilePatient> {
                 SGTextButton(
                   onPressed: () {},
                   title: 'Diário',
-                  subTitle: 'Evolução do patiente',
-                  icon: Icons.menu_book_outlined,
+                  subTitle: 'Evolução do paciente',
+                  icon: Icons.book_outlined,
                 ),
                 SGTextButton(
-                  onPressed: () {},
-                  title: 'Dados médicos',
-                  subTitle: 'Evolução do patiente',
-                  icon: Icons.list_alt_outlined,
-                ),
+                    onPressed: () {},
+                    title: 'Dados médicos',
+                    subTitle: 'Evolução do paciente',
+                    icon: Icons.local_hospital_outlined),
                 SGTextButton(
                   onPressed: () => nextScreen(),
                   title: 'Meu médico',
-                  subTitle: 'Fale com os nossos especialistas',
-                  icon: Icons.person_outlined,
+                  subTitle: 'Informações sobre o médico',
+                  icon: MdiIcons.stethoscope,
                 ),
                 SGTextButton(
                   onPressed: () {},
