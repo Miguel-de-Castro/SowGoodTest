@@ -56,12 +56,13 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+        var tokenResult = await userCredential.user?.getIdTokenResult();
         setState(() {
           _emailController.text = '';
           _passwordController.text = '';
         });
         _patient =
-            await PatientService().getPatient(userCredential.user!.uid) ?? {};
+            await PatientService().getPatient(tokenResult?.token ?? '') ?? {};
         if (_patient.isNotEmpty) {
           loadData();
           Navigator.push(
