@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/services/api_constants.dart';
+import 'package:sow_good/services/auth_service.dart';
 
 
 class PatientService {
 
-  Future<Map<String, dynamic>?> getPatient(String token) async {
+  Future<Map<String, dynamic>?> getPatient() async {
+    final token = await AuthService().refreshToken();
     final response = await http.get(Uri.parse(ApiConstants.patient), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
