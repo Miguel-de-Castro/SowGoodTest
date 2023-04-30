@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sow_good/services/auth_service.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/widgets/sg_loader.dart';
@@ -51,18 +52,16 @@ class _LoginPageState extends State<LoginPage> {
       });
       try {
         loadData();
-        UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text,
+        await AuthService().login(
+          email: _emailController.text, 
           password: _passwordController.text,
         );
-        var tokenResult = await userCredential.user?.getIdTokenResult();
         setState(() {
           _emailController.text = '';
           _passwordController.text = '';
         });
         _patient =
-            await PatientService().getPatient(tokenResult?.token ?? '') ?? {};
+            await PatientService().getPatient() ?? {};
         if (_patient.isNotEmpty) {
           loadData();
           Navigator.push(
