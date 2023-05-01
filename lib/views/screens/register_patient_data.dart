@@ -26,7 +26,13 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
     if (cpf == '' || cpf == null) {
       return null;
     }
-    return TextValidator.validateNumberWithSize(cpf, 11, 'CPF inválido');
+    return TextValidator.validateCPF(cpf);
+  }
+
+  void _handleRadioValueChange(String? value) {
+    setState(() {
+      _sexControl.text = value!;
+    });
   }
 
   double displayHeight(BuildContext context) {
@@ -41,7 +47,7 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
     // TODO: check not null validators BACKEND
     if (_formKey.currentState!.validate()) {
       widget.patient.name = _nameControl.text;
-      widget.patient.cpf = _cpfControl.text.isEmpty ? '-' : _cpfControl.text;
+      widget.patient.cpf = _cpfControl.text.isEmpty ? '' : _cpfControl.text;
       widget.patient.sex = _sexControl.text;
       widget.patient.birthDate = _birthdayControl.text;
       Navigator.push(
@@ -140,20 +146,73 @@ class _RegisterPatientDataState extends State<RegisterPatientData> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 15),
                             child: SGTextField(
-                              controller: _sexControl,
-                              validator: TextValidator.validateRequired,
-                              placeholder: 'Sexo',
-                              icon: Icons.person_outline,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: SGTextField(
                               controller: _birthdayControl,
                               validator: TextValidator.validateRequired,
                               placeholder: 'Data de nascimento',
                               icon: Icons.calendar_month,
                               type: FieldType.date,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.only(bottom: 15),
+                                    child: Text(
+                                      'Sexo: ',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Transform.scale(
+                                        scale: 1.5,
+                                        child: Radio(
+                                          value: 'Masculino',
+                                          groupValue: _sexControl.text,
+                                          onChanged: (String? selectedSexo) =>
+                                              _handleRadioValueChange(
+                                                  'Masculino'),
+                                          activeColor:
+                                              CustomColors.patientPrimary,
+                                        )),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          'Masculino',
+                                          style: TextStyle(fontSize: 16),
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 40),
+                                      child: Transform.scale(
+                                          scale: 1.5,
+                                          child: Radio(
+                                            splashRadius: 30,
+                                            value: 'Feminino',
+                                            groupValue: _sexControl.text,
+                                            onChanged: (String? selectedSexo) =>
+                                                _handleRadioValueChange(
+                                                    'Feminino'),
+                                            activeColor:
+                                                CustomColors.patientPrimary,
+                                          )),
+                                    ),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          'Feminino',
+                                          style: TextStyle(fontSize: 16),
+                                        )),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],

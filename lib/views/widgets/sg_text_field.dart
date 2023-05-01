@@ -70,7 +70,6 @@ class _SGTextFieldState extends State<SGTextField> {
       children: <Widget>[
         Container(
           height: 42,
-          width: 350,
           decoration: BoxDecoration(
               border: Border.all(
                   color: error ? CustomColors.error : CustomColors.black),
