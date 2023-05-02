@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/services/auth_service.dart';
+import 'package:sow_good/viewmodels/login_page_viewmodel.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/widgets/sg_loader.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sow_good/views/screens/profile_patient.dart';
 
+import '../../models/default_view_state.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -23,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _userError = '';
-  Map<String, dynamic> _patient = {};
+  final Map<String, dynamic> _patient = {};
+  final LoginViewModel viewmodel = LoginViewModel();
 
   double displayWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -38,64 +41,45 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  bool isLoading = false;
-
-  void loadData() {
-    isLoading ? Navigator.pop(context) : _dialogBuilder(context);
-    isLoading = !isLoading;
-  }
-
   void signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _userError = '';
+        viewmodel.userError = '';
       });
-      try {
-        loadData();
-        await AuthService().login(
-          email: _emailController.text, 
-          password: _passwordController.text,
-        );
-        setState(() {
-          _emailController.text = '';
-          _passwordController.text = '';
-        });
-        _patient =
-            await PatientService().getPatient() ?? {};
-        if (_patient.isNotEmpty) {
-          loadData();
+      viewmodel.signIn(context, _emailController, _passwordController);
+    }
+  }
+
+  void loadData() {
+    switch (viewmodel.state) {
+      case DefaultViewState.loading:
+        _dialogBuilder(context);
+        break;
+      case DefaultViewState.requestSucceed:
+        Navigator.pop(context);
+        if (viewmodel.patient.isNotEmpty) {
           Navigator.push(
             context,
             MaterialPageRoute<ProfilePatient>(
-                builder: (BuildContext context) => const ProfilePatient()),
+              builder: (BuildContext context) => const ProfilePatient(),
+            ),
           );
-        } else {
-          setState(() {
-            loadData();
-            _userError = 'Apenas para pacientes';
-          });
         }
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'invalid-email') {
-          loadData();
-          setState(() {
-            _userError = 'Email invalido';
-          });
-        }
-        if (e.code == 'user-not-found') {
-          loadData();
-          setState(() {
-            _userError = 'Usuário não encontrado';
-          });
-        }
-        if (e.code == 'wrong-password') {
-          loadData();
-          setState(() {
-            _userError = 'Sua senha esta incorreta';
-          });
-        }
-      }
+        break;
+      case DefaultViewState.requestFailed:
+        Navigator.pop(context);
+        break;
+      case DefaultViewState.started:
+        break;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    viewmodel.addListener(() {
+      loadData();
+    });
   }
 
   @override
@@ -192,11 +176,11 @@ class _LoginPageState extends State<LoginPage> {
                                 isPassword: true,
                                 type: FieldType.text),
                           ),
-                          if (_userError != '')
+                          if (viewmodel.userError != '')
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Text(
-                                _userError,
+                                viewmodel.userError,
                                 style: const TextStyle(color: Colors.red),
                               ),
                             ),
@@ -244,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return sgLoader();
+          return const sgLoader();
         });
   }
 }
