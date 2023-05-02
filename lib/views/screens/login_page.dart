@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final Map<String, dynamic> _patient = {};
   final LoginViewModel viewmodel = LoginViewModel();
 
   double displayWidth(BuildContext context) {
