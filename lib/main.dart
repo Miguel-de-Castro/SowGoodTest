@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sow_good/views/screens/login_page.dart';
+import 'package:sow_good/views/modals/diary_event.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,6 +14,18 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // ignore: always_specify_types
+  static const List<Map<String, String>> conteudo = [
+    {
+      'title': 'Nome',
+      'message': 'João da Silva'
+    },
+    {
+      'title': 'Email',
+      'message': 'joao.silva@email.com'
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const LoginPage(),
+      home: const CustomModal(content: conteudo),
     );
   }
 }
