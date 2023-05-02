@@ -51,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void loadData() {
+    setState(() {
     switch (viewmodel.state) {
       case DefaultViewState.loading:
         _dialogBuilder(context);
@@ -72,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       case DefaultViewState.started:
         break;
     }
+    });
   }
 
   @override
