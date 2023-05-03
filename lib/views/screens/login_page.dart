@@ -32,14 +32,6 @@ class _LoginPageState extends State<LoginPage> {
     return MediaQuery.of(context).size.width;
   }
 
-  void createAccount() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<RegisterPatientAccount>(
-          builder: (BuildContext context) => const RegisterPatientAccount()),
-    );
-  }
-
   void signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -57,14 +49,7 @@ class _LoginPageState extends State<LoginPage> {
         break;
       case DefaultViewState.requestSucceed:
         Navigator.pop(context);
-        if (viewmodel.patient.isNotEmpty) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<ProfilePatient>(
-              builder: (BuildContext context) => const ProfilePatient(),
-            ),
-          );
-        }
+        viewmodel.nextScreen(context);
         break;
       case DefaultViewState.requestFailed:
         Navigator.pop(context);
@@ -207,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .placeholder(),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  createAccount();
+                                  viewmodel.createAccount(context);
                                 },
                             ),
                           ],

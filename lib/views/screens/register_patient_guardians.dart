@@ -53,10 +53,6 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
     viewmodel.addGuardian();
   }
 
-  void nextScreen() async {
-    viewmodel.registerPatient(widget.patient);
-  }
-
   double displayHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }
@@ -168,7 +164,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
                   height: displayHeight(context) * 0.05,
                 ),
                 VariableTextPinkButton(
-                  onPressed: () => nextScreen(),
+                  onPressed: () => viewmodel.registerPatient(),
                   text: 'Finalizar',
                 ),
               ],

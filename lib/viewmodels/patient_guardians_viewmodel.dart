@@ -22,7 +22,7 @@ class RegisterPatientGuardiansViewModel extends ChangeNotifier {
     _textControllers.add(TextEditingController());
   }
 
-  Future<String> registerPatient(Patient patient) async {
+  Future<String> registerPatient() async {
     try {
       update(DefaultViewState.loading);
       patient.guardians = [];
