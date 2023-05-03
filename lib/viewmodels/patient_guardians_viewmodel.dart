@@ -47,6 +47,4 @@ class RegisterPatientGuardiansViewModel extends ChangeNotifier {
     _textControllers.removeAt(index);
     notifyListeners();
   }
-
-  void register() async {}
 }
