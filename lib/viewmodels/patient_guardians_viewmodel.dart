@@ -8,7 +8,6 @@ class RegisterPatientGuardiansViewModel extends ChangeNotifier {
   late Patient patient;
   final List<TextEditingController> _textControllers =
       <TextEditingController>[];
-  static const String routeName = '/registerGuardians';
   DefaultViewState state = DefaultViewState.started;
 
   RegisterPatientGuardiansViewModel();
