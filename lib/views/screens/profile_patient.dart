@@ -19,10 +19,6 @@ class ProfilePatient extends StatefulWidget {
 class _ProfilePatientState extends State<ProfilePatient> {
   ProfilePatientViewmodel viewmodel = ProfilePatientViewmodel();
 
-  void nextScreen() {
-    viewmodel.nextScreen(context);
-  }
-
   void loadData() {
     setState(() {
     switch (viewmodel.state) {
@@ -38,6 +34,14 @@ class _ProfilePatientState extends State<ProfilePatient> {
       case DefaultViewState.started:
         break;
     }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    viewmodel.addListener(() {
+      loadData();
     });
   }
 
@@ -78,7 +82,7 @@ class _ProfilePatientState extends State<ProfilePatient> {
                     subTitle: 'Evolução do paciente',
                     icon: Icons.local_hospital_outlined),
                 SGTextButton(
-                  onPressed: () => nextScreen(),
+                  onPressed: () => viewmodel.nextScreen(context),
                   title: 'Meu médico',
                   subTitle: 'Informações sobre o médico',
                   icon: MdiIcons.stethoscope,
