@@ -26,14 +26,23 @@ class TextValidator {
     return null;
   }
 
-  static String? validatePassword(String value) {
-    String pattern = r'(?=.*[0-9a-zA-Z]).{6,}';
+ static String? validatePassword(String value) {
+    String pattern = r'(?=.*[0-9a-zA-Z]).{8,}';
     RegExp regExp = RegExp(pattern);
     if (!regExp.hasMatch(value)) {
-      return 'Senha inválida, precisa conter no mínimo 6 caracteres';
+      return 'Senha inválida, precisa conter no mínimo 8 caracteres';
+    }
+    if (value == value.toLowerCase()) {
+      return 'Senha inválida, precisa conter no mínimo uma letra maiúscula';
+    }
+    if (value.replaceAll(RegExp(r'[0-9]'), '').length == value.length) {
+      return 'Senha inválida, precisa conter no mínimo um número';
+    }
+    if (value.replaceAll(RegExp(r'[!@#\$&*~]'), '').length == value.length) {
+      return 'Senha inválida, precisa conter no mínimo um caractere especial';
     }
     return null;
-  }
+}
 
   static String? validateCPF(String cpf) {
     cpf = cpf.replaceAll(RegExp(r'[^\d]'), '');
