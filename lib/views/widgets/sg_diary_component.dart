@@ -44,10 +44,10 @@ class _DiaryComponentState extends State<DiaryComponent> {
         }
       },
       child: Card(
+        elevation: 0.0,
         child: Container(
-          width: 350,
-          height: 90,
-          color: CustomColors.patientPrimary,
+          height: 80,
+          color: CustomColors.background,
           padding:
               const EdgeInsets.only(top: 15, left: 20, bottom: 7, right: 11),
           child: Row(
