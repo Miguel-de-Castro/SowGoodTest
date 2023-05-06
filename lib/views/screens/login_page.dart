@@ -26,19 +26,10 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final Map<String, dynamic> _patient = {};
   final LoginViewModel viewmodel = LoginViewModel();
 
   double displayWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
-  }
-
-  void createAccount() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<RegisterPatientAccount>(
-          builder: (BuildContext context) => const RegisterPatientAccount()),
-    );
   }
 
   void signIn() async {
@@ -58,14 +49,7 @@ class _LoginPageState extends State<LoginPage> {
         break;
       case DefaultViewState.requestSucceed:
         Navigator.pop(context);
-        if (viewmodel.patient.isNotEmpty) {
-          Navigator.push(
-            context,
-            MaterialPageRoute<ProfilePatient>(
-              builder: (BuildContext context) => const ProfilePatient(),
-            ),
-          );
-        }
+        viewmodel.nextScreen(context);
         break;
       case DefaultViewState.requestFailed:
         Navigator.pop(context);
@@ -210,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .placeholder(),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  createAccount();
+                                  viewmodel.createAccount(context);
                                 },
                             ),
                           ],

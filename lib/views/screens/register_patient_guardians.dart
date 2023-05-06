@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/services/patient_service.dart';
+import 'package:sow_good/viewmodels/patient_guardians_viewmodel.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
 import 'package:sow_good/views/screens/login_page.dart';
 import 'package:sow_good/views/widgets/button.dart';
 import 'package:sow_good/views/widgets/sg_text_field.dart';
 
+import '../../models/default_view_state.dart';
+import '../widgets/sg_loader.dart';
+
 class RegisterPatientGuardians extends StatefulWidget {
-  static const String routeName = '/registerGuardians';
   final Patient patient;
   const RegisterPatientGuardians({super.key, required this.patient});
 
@@ -18,22 +21,36 @@ class RegisterPatientGuardians extends StatefulWidget {
 }
 
 class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
-  final List<TextEditingController> _textControllers =
-      <TextEditingController>[];
+  final RegisterPatientGuardiansViewModel viewmodel = RegisterPatientGuardiansViewModel();
 
-  void register() async {}
-
-  void nextScreen() async {
-    widget.patient.guardians = [];
-    for (TextEditingController guardiansController in _textControllers) {
-      widget.patient.guardians!.add(guardiansController.text);
-    }
-    String uidAuth = await PatientService().postPatients(widget.patient);
-    Navigator.push(
+  void loadData() {
+    setState(() {
+    switch (viewmodel.state) {
+      case DefaultViewState.loading:
+        _dialogBuilder(context);
+        break;
+      case DefaultViewState.requestSucceed:
+        Navigator.push(
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => const LoginPage(),
         ));
+        break;
+      case DefaultViewState.requestFailed:
+        Navigator.pop(context);
+        break;
+      case DefaultViewState.started:
+        break;
+    }
+    });
+  }    
+
+  void removeGuardian(int index){
+    viewmodel.removeGuardian(index);
+  }
+
+  void addGuardian(){
+    viewmodel.addGuardian();
   }
 
   double displayHeight(BuildContext context) {
@@ -47,7 +64,11 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
   @override
   void initState() {
     super.initState();
-    _textControllers.add(TextEditingController());
+    viewmodel.patient = widget.patient;
+    viewmodel.textControllers.add(TextEditingController());
+    viewmodel.addListener(() {
+      loadData();
+    });
   }
 
   @override
@@ -116,7 +137,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
                         TextButton.icon(
                           onPressed: () {
                             setState(() {
-                              _textControllers.add(TextEditingController());
+                              viewmodel.add();
                             });
                           },
                           icon: const Icon(
@@ -143,7 +164,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
                   height: displayHeight(context) * 0.05,
                 ),
                 VariableTextPinkButton(
-                  onPressed: () => nextScreen(),
+                  onPressed: () => viewmodel.registerPatient(),
                   text: 'Finalizar',
                 ),
               ],
@@ -156,7 +177,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
 
   List<Widget> inputList() {
     return List<Widget>.generate(
-      _textControllers.length,
+      viewmodel.textControllers.length,
       (int index) {
         return Column(
           children: <Widget>[
@@ -165,13 +186,13 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
               child: Stack(
                 children: <Widget>[
                   SGTextField(
-                    controller: _textControllers[index],
+                    controller: viewmodel.textControllers[index],
                     placeholder: 'Nome completo do responsável',
                     icon: Icons.person_add_alt,
                     type: FieldType.deletableText,
                     onPressed: () {
                       setState(() {
-                        _textControllers.removeAt(index);
+                        viewmodel.textControllers.removeAt(index);
                       });
                     },
                   ),
@@ -182,5 +203,13 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
         );
       },
     );
+  }
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const sgLoader();
+        });
   }
 }
