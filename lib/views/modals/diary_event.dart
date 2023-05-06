@@ -1,64 +1,36 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:sow_good/views/widgets/button.dart';
-import 'package:sow_good/views/design_tokens/custom_colors.dart';
-import 'package:sow_good/views/widgets/sg_text_field.dart';
-import 'package:sow_good/validators/text_validators.dart';
 import 'package:intl/intl.dart';
-import 'dart:core';
+import 'package:sow_good/validators/text_validators.dart';
+import 'package:sow_good/views/design_tokens/custom_colors.dart';
+import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
+import 'package:sow_good/views/widgets/button.dart';
+import 'package:sow_good/views/widgets/sg_text_area.dart';
+import 'package:sow_good/views/widgets/sg_text_field.dart';
 
-class CustomModal extends StatefulWidget {
-  const CustomModal(
-    {super.key, 
-    required this.content});
-
-  final List<Map<String, String>> content;
-  
+class CreateDiaryEvent extends StatefulWidget {
+  const CreateDiaryEvent({super.key});
 
   @override
-  _CustomModalState createState() => _CustomModalState();
-
+  State<CreateDiaryEvent> createState() => _CreateDiaryEventState();
 }
 
-class _CustomModalState extends State<CustomModal> {
-  late final Map<String, TextEditingController> _controllers;
+class _CreateDiaryEventState extends State<CreateDiaryEvent> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _linkController = TextEditingController();
+  final String today = DateFormat('dd/MM/yyyy').format(DateTime.now());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late final DateFormat _dateFormat;
-  late final String _formattedDate;
-  
+
+  void save() {
+    if (_formKey.currentState!.validate()) {}
+  }
 
   @override
   void initState() {
     super.initState();
-    _dateFormat = DateFormat('dd/MM/yyyy');
-    final DateTime currentDate = DateTime.now();
-    _formattedDate = _dateFormat.format(currentDate);
-    _controllers = {};
-    for (final Map<String, String> item in widget.content) {
-      _controllers[item['title']!] = TextEditingController();
-    } 
+    _dateController.text = today;
   }
- 
-  @override
-  void dispose() {
-    for (TextEditingController controller in _controllers.values) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-   void sendEvent() {
-    if (_formKey.currentState!.validate()) {
-      print('Salvo');
-      Navigator.pop(context);
-    }
-  }
-
-   bool isUrl(String url) {
-    return Uri.parse(url).isAbsolute;
-  }
-    
 
   @override
   Widget build(BuildContext context) {
@@ -66,75 +38,89 @@ class _CustomModalState extends State<CustomModal> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: const BorderSide(
-          width: 0.5,
-          color: CustomColors.patientPrimary, 
+          color: CustomColors.patientPrimary,
+          width: 1,
         ),
       ),
-
       content: Form(
         key: _formKey,
         child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (Map<String, String> item in widget.content)
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-                    child: Text(
-                      item['title']!,
-                      style: const TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w200,
-                        fontSize: 18,
-                        color: CustomColors.patientPrimary,
-                      ),
-                    ),
-                  ),
-                  if(item['type'] == 'text')
-                    SGTextField(
-                      controller: _controllers[item['title']!]!,
-                      validator: TextValidator.validateRequired,
-                      icon: Icons.book,
-                      placeholder: item['message']!,
-                      type: FieldType.text,
-                    ),
-                  if(item['type'] == 'data')
-                    SGTextField(
-                      controller: _controllers[item['title']!]!,
-                      icon: Icons.calendar_month,
-                      validator: TextValidator.validateRequired,
-                      placeholder: _formattedDate,
-                      type: FieldType.date,
-                    ),
-                  if(item['type'] == 'link')
-                    SGTextField(
-                      controller: _controllers[item['title']!]!,
-                      icon: Icons.link,
-                      placeholder: item['message']!,
-                      type: FieldType.text,
-                    ),
-                ],
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Título',
+                style: CustomTextStylesBuilder()
+                    .withColor(CustomColors.patientPrimary)
+                    .title(),
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              alignment: Alignment.center,
-              child: VariableTextPinkButton(
-                text: 'Salvar',
-                 onPressed: () {
-                  sendEvent();
-                },
+            SGTextField(
+              controller: _titleController,
+              validator: TextValidator.validateRequired,
+              placeholder: 'Largou a chupeta',
+              icon: Icons.book,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Data do Ocorrido',
+                style: CustomTextStylesBuilder()
+                    .withColor(CustomColors.patientPrimary)
+                    .title(),
               ),
             ),
-          ),
-        ],
+            SGTextField(
+              controller: _dateController,
+              validator: TextValidator.validateRequired,
+              placeholder: today,
+              icon: Icons.calendar_month,
+              type: FieldType.date,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Descrição',
+                style: CustomTextStylesBuilder()
+                    .withColor(CustomColors.patientPrimary)
+                    .title(),
+              ),
+            ),
+            SGTextArea(
+              controller: _descriptionController,
+              placeholder: 'Parou de usar chupeta.',
+              icon: Icons.book,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Link do vídeo/foto',
+                style: CustomTextStylesBuilder()
+                    .withColor(CustomColors.patientPrimary)
+                    .title(),
+              ),
+            ),
+            SGTextField(
+              controller: _linkController,
+              placeholder: 'Link',
+              icon: Icons.link,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Center(
+                child: VariableTextPinkButton(
+                  onPressed: () {
+                    save();
+                  },
+                  text: 'Salvar',
+                ),
+              ),
+            )
+          ],
+        ),
       ),
-    ),
     );
   }
 }
