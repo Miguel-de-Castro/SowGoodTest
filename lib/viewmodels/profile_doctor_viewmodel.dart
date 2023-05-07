@@ -84,10 +84,6 @@ class ProfileDoctorViewmodel extends ChangeNotifier {
     return rqe;
   }
 
-  Future<void> getOpenMap() {
-    return openMap();
-  }
-
   Future<void> openMap() async {
     double lat = -30.0592974;
     double longi = -51.1729965;

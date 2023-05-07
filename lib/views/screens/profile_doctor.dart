@@ -75,7 +75,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                   especialidade: viewmodel.getExpertise(),
                   nome: viewmodel.getname(),
                   rqe: 'RQE ${viewmodel.getRqe()}',
-                  openGoogle: viewmodel.openMap(),
+                  test: () => viewmodel.openMap(),
                 ),
                 const Divider(
                   thickness: 2,
