@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sow_good/models/default_view_state.dart';
@@ -18,10 +16,11 @@ class ProfilePatientViewmodel extends ChangeNotifier {
 
   void nextScreen(BuildContext context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const ProfileDoctor(),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const ProfileDoctor(),
+      ),
+    );
   }
 
   void navigateToDiaryScreen(BuildContext context) {

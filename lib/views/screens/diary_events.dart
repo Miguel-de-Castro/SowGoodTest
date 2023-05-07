@@ -91,7 +91,7 @@ class _DiaryEventsState extends State<DiaryEvents> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) {
+                  builder: (context) {
                     return CreateDiaryEvent();
                   },
                 );
