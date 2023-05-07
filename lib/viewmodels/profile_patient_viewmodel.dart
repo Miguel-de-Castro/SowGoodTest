@@ -1,33 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sow_good/models/default_view_state.dart';
-import 'package:sow_good/services/patient_service.dart';
-import 'package:sow_good/views/screens/diary_events_page.dart';
 import '../services/auth_service.dart';
-import '../views/screens/profile_doctor.dart';
 
-class ProfilePatientViewmodel extends ChangeNotifier {
-  DefaultViewState state = DefaultViewState.started;
+class ProfilePatientViewmodel extends ChangeNotifier{
 
-  void update(DefaultViewState newState) {
+  ProfilePatientViewState state = ProfilePatientViewState.started;
+  String? error;
+
+  void update(ProfilePatientViewState newState) {
     state = newState;
     notifyListeners();
   }
 
-  void nextScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => const ProfileDoctor(),
-      ),
-    );
+  void navigateToDoctor() {
+    update(ProfilePatientViewState.navigateToDoctor);
+    
   }
 
-  void navigateToDiaryScreen(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const DiaryEventsPage(),
-        ));
+  void navigateToDiaryScreen() {
+     update(ProfilePatientViewState.navigateToDiary);
+  }
+  
+
+  Future<void> logout() async {
+    try{
+    update(ProfilePatientViewState.loading);
+    bool response = await AuthService().logout();
+    if (response) {
+      update(ProfilePatientViewState.requestLogoutSucceed);
+    }
+    } on Exception catch (e) {
+      error = "Erro ao fazer logout";
+      update(ProfilePatientViewState.requestFailed);
+    }
   }
 }
+
+enum ProfilePatientViewState{
+  started,
+  loading,
+  navigateToDoctor,
+  navigateToDiary,
+  requestFailed,
+  requestLogoutSucceed,
+}
+  
+
