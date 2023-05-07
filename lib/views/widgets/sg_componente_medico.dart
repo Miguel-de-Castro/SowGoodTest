@@ -9,6 +9,7 @@ class SGcomponenteMedico extends StatefulWidget {
     required this.crm,
     required this.rqe,
     required this.endereco,
+    required this.openGoogle,
   });
 
   final String nome;
@@ -16,6 +17,7 @@ class SGcomponenteMedico extends StatefulWidget {
   final String crm;
   final String rqe;
   final String endereco;
+  final Function() openGoogle;
 
   @override
   State<SGcomponenteMedico> createState() => _SGcomponenteMedicoState();
@@ -67,7 +69,7 @@ class _SGcomponenteMedicoState extends State<SGcomponenteMedico> {
             Row(
               children: <Widget>[
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: widget.openGoogle,
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
                   icon: Icon(
                     Icons.location_on,

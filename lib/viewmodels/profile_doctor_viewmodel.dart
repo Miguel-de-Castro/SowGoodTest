@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sow_good/models/default_view_state.dart';
 import 'package:sow_good/models/doctor.dart';
 import 'package:sow_good/services/patient_service.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../models/health_insurance.dart';
 import '../views/screens/profile_doctor.dart';
 
@@ -80,5 +82,22 @@ class ProfileDoctorViewmodel extends ChangeNotifier {
 
   String getRqe() {
     return rqe;
+  }
+
+  Future<void> getOpenMap() {
+    return openMap();
+  }
+
+  Future<void> openMap() async {
+    double lat = -30.0592974;
+    double longi = -51.1729965;
+    String googleURL =
+        'https://www.google.com/maps/search/?api=1&query=$lat,$longi';
+
+    if (await canLaunchUrlString(googleURL)) {
+      await launchUrlString(googleURL);
+    } else {
+      throw 'couldnt open map';
+    }
   }
 }

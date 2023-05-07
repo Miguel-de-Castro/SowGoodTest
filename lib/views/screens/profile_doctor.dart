@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/viewmodels/profile_doctor_viewmodel.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
+import 'package:sow_good/views/screens/profile_patient.dart';
 import 'package:sow_good/views/widgets/button.dart';
 import 'package:sow_good/views/widgets/sg_app_bar.dart';
 import 'package:sow_good/views/widgets/sg_componente_medico.dart';
@@ -38,7 +39,6 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
           Navigator.pop(context);
           break;
         case DefaultViewState.requestFailed:
-          Navigator.pop(context);
           break;
         case DefaultViewState.started:
           break;
@@ -75,6 +75,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                   especialidade: viewmodel.getExpertise(),
                   nome: viewmodel.getname(),
                   rqe: 'RQE ${viewmodel.getRqe()}',
+                  openGoogle: viewmodel.openMap(),
                 ),
                 const Divider(
                   thickness: 2,
