@@ -32,6 +32,14 @@ class _LoginPageState extends State<LoginPage> {
     return MediaQuery.of(context).size.width;
   }
 
+  void createAccount() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<RegisterPatientAccount>(
+          builder: (BuildContext context) => const RegisterPatientAccount()),
+    );
+  }
+
   void signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -43,20 +51,27 @@ class _LoginPageState extends State<LoginPage> {
 
   void loadData() {
     setState(() {
-    switch (viewmodel.state) {
-      case DefaultViewState.loading:
-        _dialogBuilder(context);
-        break;
-      case DefaultViewState.requestSucceed:
-        Navigator.pop(context);
-        viewmodel.nextScreen(context);
-        break;
-      case DefaultViewState.requestFailed:
-        Navigator.pop(context);
-        break;
-      case DefaultViewState.started:
-        break;
-    }
+      switch (viewmodel.state) {
+        case DefaultViewState.loading:
+          _dialogBuilder(context);
+          break;
+        case DefaultViewState.requestSucceed:
+          Navigator.pop(context);
+          if (viewmodel.patient.isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute<ProfilePatient>(
+                builder: (BuildContext context) => const ProfilePatient(),
+              ),
+            );
+          }
+          break;
+        case DefaultViewState.requestFailed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.started:
+          break;
+      }
     });
   }
 
@@ -194,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .placeholder(),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  viewmodel.createAccount(context);
+                                  createAccount();
                                 },
                             ),
                           ],
