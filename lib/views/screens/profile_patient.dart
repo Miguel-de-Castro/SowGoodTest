@@ -24,35 +24,41 @@ class _ProfilePatientState extends State<ProfilePatient> {
 
   void loadData() {
     setState(() {
-    switch (viewmodel.state) {
-      case ProfilePatientViewState.loading:
-        _dialogBuilder(context);
-        break;
-      case ProfilePatientViewState.navigateToDoctor:
-        Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => ProfileDoctor(),
-        ));
-        break;
-      case ProfilePatientViewState.navigateToDiary:
-        Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const DiaryEventsPage(),
-        ));
-        break;
-      case ProfilePatientViewState.requestFailed:
-        Navigator.pop(context);
-        SGSnackBar.show(context: context, color: CustomColors.error, text: viewmodel.error ?? 'Tente novamente');
-        break;
-      case ProfilePatientViewState.requestLogoutSucceed:
-        Navigator.pop(context);
-        Navigator.pop(context);
-        break;
-      case ProfilePatientViewState.started:
-        break;
-    }
+      switch (viewmodel.state) {
+        case ProfilePatientViewState.loading:
+          _dialogBuilder(context);
+          break;
+        case ProfilePatientViewState.navigateToDoctor:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => ProfileDoctor(),
+              ));
+          break;
+        case ProfilePatientViewState.navigateToDiary:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => const DiaryEventsPage(),
+              ));
+          break;
+        case ProfilePatientViewState.requestFailed:
+          Navigator.pop(context);
+          SGSnackBar.show(
+              context: context,
+              color: CustomColors.error,
+              text: viewmodel.error ?? 'Tente novamente');
+          break;
+        case ProfilePatientViewState.requestLogoutSucceed:
+          Navigator.pop(context);
+          Navigator.pop(context);
+          break;
+        case ProfilePatientViewState.started:
+          break;
+        case ProfilePatientViewState.requestPatientDataSucceed:
+          Navigator.pop(context);
+          break;
+      }
     });
   }
 
@@ -61,6 +67,9 @@ class _ProfilePatientState extends State<ProfilePatient> {
     super.initState();
     viewmodel.addListener(() {
       loadData();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewmodel.getPatientData();
     });
   }
 
@@ -71,15 +80,14 @@ class _ProfilePatientState extends State<ProfilePatient> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(400),
           child: PatientCard(
-              name: 'Daniel Gus',
-              age: 5,
-              parents: 'Tania',
-              birthDate: '20/01/2018',
-              profilePictureUrl:
-                  'https://cdn.pixabay.com/photo/2015/03/17/01/57/kid-677080_1280.jpg', 
-              logoutFunc: () => viewmodel.logout()  ,
-              )),
-      body: SafeArea( 
+              logoutFunc: () => viewmodel.logout(),
+              name: viewmodel.patient?.name ?? "",
+              imageLink: viewmodel.imageLink,
+              birthDate: viewmodel.patient?.birthDate ?? "",
+              guardians: viewmodel.patient?.guardians?.join(", ") ?? "",
+              age:
+                  viewmodel.getCurrentAge(viewmodel.patient?.birthDate ?? ""))),
+      body: SafeArea(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0.2),

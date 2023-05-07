@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
           break;
         case DefaultViewState.requestSucceed:
           Navigator.pop(context);
-          if (viewmodel.patient.isNotEmpty) {
+          if (viewmodel.patient != null) {
             _passwordController.text = '';
             Navigator.push(
               context,

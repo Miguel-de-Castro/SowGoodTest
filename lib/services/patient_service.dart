@@ -8,7 +8,7 @@ import '../models/diary_events.dart';
 import 'package:sow_good/utils.dart';
 
 class PatientService {
-  Future<Map<String, dynamic>?> getPatient() async {
+  Future<Patient?> getPatient() async {
     final String? token = await AuthService().refreshToken();
     final http.Response response =
         await http.get(Uri.parse(ApiConstants.patient), headers: {
@@ -17,7 +17,8 @@ class PatientService {
     });
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
-      return jsonData;
+      Patient? patient = Patient.fromJson(jsonData);
+      return patient;
     } else if (response.statusCode == 404) {
       return null;
     } else {
