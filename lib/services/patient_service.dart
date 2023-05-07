@@ -3,13 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/services/api_constants.dart';
 import 'package:sow_good/services/auth_service.dart';
-
+import 'package:sow_good/utils.dart';
 
 class PatientService {
-
   Future<Map<String, dynamic>?> getPatient() async {
-    final token = await AuthService().refreshToken();
-    final response = await http.get(Uri.parse(ApiConstants.patient), headers: {
+    final String? token = await AuthService().refreshToken();
+    final http.Response response =
+        await http.get(Uri.parse(ApiConstants.patient), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     });
@@ -24,7 +24,6 @@ class PatientService {
   }
 
   Future<String> postPatients(Patient patient) async {
-    print(jsonEncode(patient.toJson()));
     final http.Response response = await http.post(
         Uri.parse(ApiConstants.registerPatient),
         body: jsonEncode(patient.toJson()),
@@ -32,5 +31,20 @@ class PatientService {
           'Content-Type': 'application/json',
         });
     return response.body;
+  }
+
+  Future<String?> postDiary(Diary diary) async {
+    final String? token = await AuthService().refreshToken();
+    final http.Response response = await http.post(
+        Uri.parse(ApiConstants.addDiary),
+        body: jsonEncode(diary.toJson()),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+    if (response.statusCode == 204) {
+      return null;
+    }
+    return decodeError(response.body);
   }
 }

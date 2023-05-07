@@ -65,3 +65,25 @@ class MedicalData {
         'observations': observations,
       };
 }
+
+class Diary {
+  Diary({this.title, this.date, this.description, this.link});
+  String? title;
+  String? date;
+  String? description;
+  String? link;
+
+  factory Diary.fromJson(Map<String, dynamic> json) => Diary(
+        title: json['title'],
+        date: json['date'],
+        description: json['description'],
+        link: json['link'] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'date': date,
+        'description': description,
+        'link': link,
+      };
+}
