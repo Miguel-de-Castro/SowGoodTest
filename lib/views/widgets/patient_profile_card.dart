@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/widgets/sg_logout_button.dart';
 
+import '../design_tokens/custom_text_styles.dart';
+
 class PatientCard extends StatefulWidget {
   String name;
   String birthDate;
@@ -49,12 +51,6 @@ class _PatientCardState extends State<PatientCard>
     return body();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   Widget body() {
     double textScale = MediaQuery.of(context).textScaleFactor;
     Size screenSize = MediaQuery.of(context).size * 0.21;
@@ -70,7 +66,7 @@ class _PatientCardState extends State<PatientCard>
           child: Stack(
             children: [
               Positioned(
-                top: 20,
+                top: 40,
                 right: 25,
                 child: SGLogoutButton(
                   onPressed: widget.logoutFunc,
@@ -80,7 +76,8 @@ class _PatientCardState extends State<PatientCard>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding:
+                        const EdgeInsets.only(top: 55, right: 20, left: 20),
                     child: GestureDetector(
                       child: CircleAvatar(
                         radius: screenSize.height * 0.23,
@@ -102,29 +99,26 @@ class _PatientCardState extends State<PatientCard>
                       children: [
                         Text(
                           widget.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 0.14 * screenSize.height,
-                            color: textColor,
-                          ),
+                          style: CustomTextStylesBuilder()
+                              .withSize(24)
+                              .withColor(CustomColors.background)
+                              .title(),
                         ),
                         Text(
                           widget.birthDate.isEmpty
                               ? ''
                               : '${widget.birthDate} - ${widget.age} anos',
-                          style: TextStyle(
-                            fontSize: 0.10 * screenSize.height,
-                            color: textColor,
-                          ),
+                          style: CustomTextStylesBuilder()
+                              .withColor(CustomColors.background)
+                              .subTitle(),
                         ),
                         Text(
                           widget.guardians.isEmpty
                               ? ''
                               : 'Resp. ${widget.guardians}',
-                          style: TextStyle(
-                            fontSize: 0.10 * screenSize.height,
-                            color: textColor,
-                          ),
+                          style: CustomTextStylesBuilder()
+                              .withColor(CustomColors.background)
+                              .subTitle(),
                         )
                       ],
                     ),

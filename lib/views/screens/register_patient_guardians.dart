@@ -21,35 +21,36 @@ class RegisterPatientGuardians extends StatefulWidget {
 }
 
 class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
-  final RegisterPatientGuardiansViewModel viewmodel = RegisterPatientGuardiansViewModel();
+  final RegisterPatientGuardiansViewModel viewmodel =
+      RegisterPatientGuardiansViewModel();
 
   void loadData() {
     setState(() {
-    switch (viewmodel.state) {
-      case DefaultViewState.loading:
-        _dialogBuilder(context);
-        break;
-      case DefaultViewState.requestSucceed:
-        Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => const LoginPage(),
-        ));
-        break;
-      case DefaultViewState.requestFailed:
-        Navigator.pop(context);
-        break;
-      case DefaultViewState.started:
-        break;
-    }
+      switch (viewmodel.state) {
+        case DefaultViewState.loading:
+          _dialogBuilder(context);
+          break;
+        case DefaultViewState.requestSucceed:
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => const LoginPage(),
+              ));
+          break;
+        case DefaultViewState.requestFailed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.started:
+          break;
+      }
     });
-  }    
+  }
 
-  void removeGuardian(int index){
+  void removeGuardian(int index) {
     viewmodel.removeGuardian(index);
   }
 
-  void addGuardian(){
+  void addGuardian() {
     viewmodel.addGuardian();
   }
 
@@ -124,7 +125,8 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       'Responsáveis',
-                      style: CustomTextStyles.title,
+                      style:
+                          CustomTextStylesBuilder().withSize(30).placeholder(),
                     ),
                   ),
                 ),
@@ -204,6 +206,7 @@ class _RegisterPatientGuardiansState extends State<RegisterPatientGuardians> {
       },
     );
   }
+
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
         context: context,
