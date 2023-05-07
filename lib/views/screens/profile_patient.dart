@@ -21,19 +21,19 @@ class _ProfilePatientState extends State<ProfilePatient> {
 
   void loadData() {
     setState(() {
-    switch (viewmodel.state) {
-      case DefaultViewState.loading:
-        _dialogBuilder(context);
-        break;
-      case DefaultViewState.requestSucceed:
-        Navigator.pop(context);
-        break;
-      case DefaultViewState.requestFailed:
-        Navigator.pop(context);
-        break;
-      case DefaultViewState.started:
-        break;
-    }
+      switch (viewmodel.state) {
+        case DefaultViewState.loading:
+          _dialogBuilder(context);
+          break;
+        case DefaultViewState.requestSucceed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.requestFailed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.started:
+          break;
+      }
     });
   }
 
@@ -71,7 +71,7 @@ class _ProfilePatientState extends State<ProfilePatient> {
                   icon: Icons.chat_outlined,
                 ),
                 SGTextButton(
-                  onPressed: () {},
+                  onPressed: () => viewmodel.navigateToDiaryScreen(context),
                   title: 'Diário',
                   subTitle: 'Evolução do paciente',
                   icon: Icons.book_outlined,
@@ -100,7 +100,7 @@ class _ProfilePatientState extends State<ProfilePatient> {
       ),
     );
   }
-  
+
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
         context: context,
