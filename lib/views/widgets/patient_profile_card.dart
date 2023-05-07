@@ -1,9 +1,7 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sow_good/models/default_view_state.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
-import 'package:sow_good/views/widgets/sg_loader.dart';
 import 'package:sow_good/views/widgets/sg_logout_button.dart';
 
 class PatientCard extends StatefulWidget {
@@ -11,7 +9,8 @@ class PatientCard extends StatefulWidget {
   String birthDate;
   String guardians;
   int age;
-  String imageLink;
+  // String imageLink;
+  File? imageLink;
 
   final Function() logoutFunc;
   PatientCard({
@@ -88,7 +87,10 @@ class _PatientCardState extends State<PatientCard>
                         backgroundColor: CustomColors.white,
                         child: CircleAvatar(
                           radius: screenSize.height * 0.22,
-                          backgroundImage: NetworkImage(widget.imageLink),
+                          // backgroundImage: NetworkImage(widget.imageLink),
+                          // backgroundImage: Image.file(widget.imageLink),
+                          backgroundImage: FileImage(widget.imageLink!),
+
                         ),
                       ),
                     ),

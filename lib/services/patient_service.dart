@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/services/api_constants.dart';
@@ -71,5 +73,20 @@ class PatientService {
       return null;
     }
     return decodeError(response.body);
+  }
+
+  Future<File> downloadImage(String s3Url) async {
+    final http.Response response = await http.get(Uri.parse(s3Url));
+
+    final Directory tempDir = await getTemporaryDirectory();
+
+    final DateTime now = DateTime.now();
+    final String fileName =
+        '${now.year}${now.month}${now.day}${now.microsecondsSinceEpoch}.jpg';
+    final File file = File('${tempDir.path}/$fileName');
+
+    await file.writeAsBytes(response.bodyBytes);
+
+    return file;
   }
 }

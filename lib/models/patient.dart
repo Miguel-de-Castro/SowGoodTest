@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 
 class Patient {
   Patient({
@@ -10,6 +9,7 @@ class Patient {
     this.sex,
     this.medicalData,
     this.guardians,
+    this.profile_image_link,
   });
 
   String? password;
@@ -20,6 +20,7 @@ class Patient {
   String? sex;
   MedicalData? medicalData;
   List<String>? guardians;
+  String? profile_image_link;
 
   factory Patient.fromJson(Map<String, dynamic> json) => Patient(
         password: json['password'],
@@ -30,6 +31,7 @@ class Patient {
         sex: json['sex'],
         medicalData: MedicalData.fromJson(json['medical_data']),
         guardians: List<String>.from(json['guardians'].map((x) => x)),
+        profile_image_link: json['profile_image'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +43,7 @@ class Patient {
         'sex': sex,
         'medical_data': medicalData!.toJson(),
         'guardians': List<dynamic>.from(guardians!.map((String x) => x)),
+        'profile_image': profile_image_link,
       };
 }
 

@@ -7,10 +7,8 @@ import 'package:sow_good/views/widgets/patient_profile_card.dart';
 import 'package:sow_good/views/widgets/sg_snackbar.dart';
 import 'package:sow_good/views/widgets/sg_text_button.dart';
 
-import '../../models/default_view_state.dart';
 import '../widgets/sg_loader.dart';
 import 'diary_events_page.dart';
-import 'login_page.dart';
 
 class ProfilePatient extends StatefulWidget {
   const ProfilePatient({super.key});
@@ -32,7 +30,7 @@ class _ProfilePatientState extends State<ProfilePatient> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => ProfileDoctor(),
+                builder: (BuildContext context) => const ProfileDoctor(),
               ));
           break;
         case ProfilePatientViewState.navigateToDiary:
@@ -69,7 +67,7 @@ class _ProfilePatientState extends State<ProfilePatient> {
       loadData();
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      viewmodel.getPatientData();
+      viewmodel.getPatientData(viewmodel.patient?.profile_image_link);
     });
   }
 
@@ -81,12 +79,13 @@ class _ProfilePatientState extends State<ProfilePatient> {
           preferredSize: const Size.fromHeight(400),
           child: PatientCard(
               logoutFunc: () => viewmodel.logout(),
-              name: viewmodel.patient?.name ?? "",
-              imageLink: viewmodel.imageLink,
-              birthDate: viewmodel.patient?.birthDate ?? "",
-              guardians: viewmodel.patient?.guardians?.join(", ") ?? "",
+              name: viewmodel.patient?.name ?? '',
+              imageLink: viewmodel.file,
+              // profile_image: viewmodel.patient?.
+              birthDate: viewmodel.patient?.birthDate ?? '',
+              guardians: viewmodel.patient?.guardians?.join(', ') ?? '',
               age:
-                  viewmodel.getCurrentAge(viewmodel.patient?.birthDate ?? ""))),
+                  viewmodel.getCurrentAge(viewmodel.patient?.birthDate ?? ''))),
       body: SafeArea(
         child: Center(
           child: Padding(

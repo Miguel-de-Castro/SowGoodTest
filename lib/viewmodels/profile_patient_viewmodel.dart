@@ -3,10 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/services/patient_service.dart';
 import '../services/auth_service.dart';
+import 'dart:io';
 
 class ProfilePatientViewmodel extends ChangeNotifier {
   ProfilePatientViewState state = ProfilePatientViewState.started;
   String? error;
+  File? file;
   Patient? patient;
 
   void update(ProfilePatientViewState newState) {
@@ -29,20 +31,18 @@ class ProfilePatientViewmodel extends ChangeNotifier {
       if (response) {
         update(ProfilePatientViewState.requestLogoutSucceed);
       }
-    } on Exception catch (e) {
-      error = "Erro ao fazer logout";
+    } on Exception {
+      error = 'Erro ao fazer logout';
       update(ProfilePatientViewState.requestFailed);
     }
   }
 
-  String imageLink =
-      'https://cdn.pixabay.com/photo/2015/03/17/01/57/kid-677080_1280.jpg';
-
-  Future<void> getPatientData() async {
+  Future<void> getPatientData(String? imageUrl) async {
     try {
       update(ProfilePatientViewState.loading);
       patient = await PatientService().getPatient();
-      if (patient != null) {
+      file = await PatientService().downloadImage(imageUrl!);
+      if (patient != null && file != null) {
         update(ProfilePatientViewState.requestPatientDataSucceed);
       } else {
         update(ProfilePatientViewState.requestFailed);
@@ -54,8 +54,8 @@ class ProfilePatientViewmodel extends ChangeNotifier {
 
   int getCurrentAge(String birthDate) {
     try {
-      final inputFormat = DateFormat('dd/MM/yyyy');
-      var birthday = inputFormat.parse(birthDate);
+      final DateFormat inputFormat = DateFormat('dd/MM/yyyy');
+      DateTime birthday = inputFormat.parse(birthDate);
       DateTime currentDate = DateTime.now();
       int age = currentDate.year - birthday.year;
       int month1 = currentDate.month;
@@ -70,7 +70,7 @@ class ProfilePatientViewmodel extends ChangeNotifier {
         }
       }
       return age;
-    } on Exception catch (e) {
+    } on Exception {
       return 0;
     }
   }
