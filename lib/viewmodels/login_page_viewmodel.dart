@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sow_good/models/default_view_state.dart';
+import 'package:sow_good/models/patient.dart';
 import 'package:sow_good/services/patient_service.dart';
 import '../services/auth_service.dart';
 
 class LoginViewModel extends ChangeNotifier {
   String userError = '';
   DefaultViewState state = DefaultViewState.started;
-  Map<String, dynamic> patient = {};
+  Patient? patient;
 
   void update(DefaultViewState newState) {
     state = newState;
@@ -23,8 +24,8 @@ class LoginViewModel extends ChangeNotifier {
         password: passwordController.text,
       );
 
-      patient = await PatientService().getPatient() ?? {};
-      if (!patient.isNotEmpty) {
+      patient = await PatientService().getPatient();
+      if (patient == null) {
         userError = 'Apenas para pacientes';
         update(DefaultViewState.requestFailed);
       } else {

@@ -55,6 +55,9 @@ class _ProfilePatientState extends State<ProfilePatient> {
           break;
         case ProfilePatientViewState.started:
           break;
+        case ProfilePatientViewState.requestPatientDataSucceed:
+          Navigator.pop(context);
+          break;
       }
     });
   }
@@ -65,6 +68,9 @@ class _ProfilePatientState extends State<ProfilePatient> {
     viewmodel.addListener(() {
       loadData();
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewmodel.getPatientData();
+    });
   }
 
   @override
@@ -74,14 +80,13 @@ class _ProfilePatientState extends State<ProfilePatient> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(400),
           child: PatientCard(
-            name: 'Daniel Gus',
-            age: 5,
-            parents: 'Tania',
-            birthDate: '20/01/2018',
-            profilePictureUrl:
-                'https://cdn.pixabay.com/photo/2015/03/17/01/57/kid-677080_1280.jpg',
-            logoutFunc: () => viewmodel.logout(),
-          )),
+              logoutFunc: () => viewmodel.logout(),
+              name: viewmodel.patient?.name ?? "",
+              imageLink: viewmodel.imageLink,
+              birthDate: viewmodel.patient?.birthDate ?? "",
+              guardians: viewmodel.patient?.guardians?.join(", ") ?? "",
+              age:
+                  viewmodel.getCurrentAge(viewmodel.patient?.birthDate ?? ""))),
       body: SafeArea(
         child: Center(
           child: Padding(

@@ -102,7 +102,8 @@ class _RegisterPatientMedicalDataState
                     alignment: Alignment.topLeft,
                     child: Text(
                       'Dados médicos',
-                      style: CustomTextStyles.title,
+                      style:
+                          CustomTextStylesBuilder().withSize(30).placeholder(),
                     ),
                   ),
                 ),

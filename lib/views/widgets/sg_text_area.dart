@@ -79,7 +79,7 @@ class _SGTextAreaState extends State<SGTextArea> {
                   hintText: widget.placeholder,
                   counterText: '',
                   hintStyle: CustomTextStylesBuilder()
-                      .withColor(CustomColors.graySubtitle)
+                      .withColor(CustomColors.grayPlaceholder)
                       .placeholder(),
                   border: InputBorder.none,
                 ),
