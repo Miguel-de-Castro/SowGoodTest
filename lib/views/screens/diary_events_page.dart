@@ -102,7 +102,7 @@ class _DiaryEventsPageState extends State<DiaryEventsPage> {
                   builder: (BuildContext context) {
                     return const CreateDiaryEvent();
                   },
-                );
+                ).then((value) => viewmodel.getDiaryEvents());
               },
             )
           ],

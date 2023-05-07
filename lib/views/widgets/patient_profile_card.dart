@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/widgets/sg_logout_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sow_good/views/screens/login_page.dart';
+import 'package:sow_good/models/default_view_state.dart';
+
+
 
 class PatientCard extends StatelessWidget {
   final String name;
@@ -11,6 +16,7 @@ class PatientCard extends StatelessWidget {
   final Color cardColor = CustomColors.patientPrimary;
   final Color textColor = CustomColors.white;
   bool changed = false;
+  final void Function() logoutFunc;
 
   PatientCard({
     super.key,
@@ -19,7 +25,9 @@ class PatientCard extends StatelessWidget {
     required this.parents,
     required this.age,
     required this.profilePictureUrl,
+    required this.logoutFunc,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,7 @@ class PatientCard extends StatelessWidget {
                 top: 20,
                 right: 25,
                 child: SGLogoutButton(
-                  onPressed: () {},
+                  onPressed: logoutFunc
                 ),
               ),
               Row(

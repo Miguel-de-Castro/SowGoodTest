@@ -26,4 +26,18 @@ class AuthService {
     final token = await _userCredential?.user?.getIdTokenResult();
     return token?.token;
   }
+
+
+  Future<bool> logout() async{
+    try{
+      await FirebaseAuth.instance.signOut();
+    if (FirebaseAuth.instance.currentUser == null) {
+      _userCredential = null;
+      return true;
+    }
+    return false;
+    } on Exception catch (e) {
+      return false;
+    }
+  }
 }
