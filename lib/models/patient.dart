@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Patient {
   Patient({
     this.password,
