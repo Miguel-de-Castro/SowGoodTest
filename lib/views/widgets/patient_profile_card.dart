@@ -86,8 +86,8 @@ class _PatientCardState extends State<PatientCard>
                           radius: screenSize.height * 0.22,
                           // backgroundImage: NetworkImage(widget.imageLink),
                           // backgroundImage: Image.file(widget.imageLink),
-                          backgroundImage: FileImage(widget.imageLink!),
-
+                          backgroundImage: FileImage(widget.imageLink ??
+                              File('lib/images/FotoPlaceholderCrianca.png')),
                         ),
                       ),
                     ),

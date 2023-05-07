@@ -67,7 +67,7 @@ class _ProfilePatientState extends State<ProfilePatient> {
       loadData();
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      viewmodel.getPatientData(viewmodel.patient?.profile_image_link);
+      viewmodel.getPatientData();
     });
   }
 

@@ -37,11 +37,12 @@ class ProfilePatientViewmodel extends ChangeNotifier {
     }
   }
 
-  Future<void> getPatientData(String? imageUrl) async {
+  Future<void> getPatientData() async {
     try {
       update(ProfilePatientViewState.loading);
       patient = await PatientService().getPatient();
-      file = await PatientService().downloadImage(imageUrl!);
+      file = await PatientService()
+          .downloadImage(patient?.profile_image_link ?? '');
       if (patient != null && file != null) {
         update(ProfilePatientViewState.requestPatientDataSucceed);
       } else {
