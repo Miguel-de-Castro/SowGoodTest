@@ -8,6 +8,7 @@ class Patient {
     this.sex,
     this.medicalData,
     this.guardians,
+    this.doctorId,
   });
 
   String? password;
@@ -18,17 +19,18 @@ class Patient {
   String? sex;
   MedicalData? medicalData;
   List<String>? guardians;
+  String? doctorId;
 
   factory Patient.fromJson(Map<String, dynamic> json) => Patient(
-        password: json['password'],
-        email: json['email'],
-        name: json['name'],
-        birthDate: json['birth_date'],
-        cpf: json['cpf'],
-        sex: json['sex'],
-        medicalData: MedicalData.fromJson(json['medical_data']),
-        guardians: List<String>.from(json['guardians'].map((x) => x)),
-      );
+      password: json['password'],
+      email: json['email'],
+      name: json['name'],
+      birthDate: json['birth_date'],
+      cpf: json['cpf'],
+      sex: json['sex'],
+      medicalData: MedicalData.fromJson(json['medical_data']),
+      guardians: List<String>.from(json['guardians'].map((x) => x)),
+      doctorId: json['doctor_id']);
 
   Map<String, dynamic> toJson() => {
         'password': password,

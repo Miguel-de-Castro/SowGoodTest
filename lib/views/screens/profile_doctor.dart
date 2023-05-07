@@ -28,22 +28,21 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
     return MediaQuery.of(context).size.width;
   }
 
-
   void loadData() {
     setState(() {
-    switch (viewmodel.state) {
-      case DefaultViewState.loading:
-        _dialogBuilder(context);
-        break;
-      case DefaultViewState.requestSucceed:
-        Navigator.pop(context);
-        break;
-      case DefaultViewState.requestFailed:
-        Navigator.pop(context);
-        break;
-      case DefaultViewState.started:
-        break;
-    }
+      switch (viewmodel.state) {
+        case DefaultViewState.loading:
+          _dialogBuilder(context);
+          break;
+        case DefaultViewState.requestSucceed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.requestFailed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.started:
+          break;
+      }
     });
   }
 
@@ -52,6 +51,10 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
     super.initState();
     viewmodel.addListener(() {
       loadData();
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      viewmodel.getDoctorData();
     });
   }
 
@@ -66,11 +69,11 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
             child: Column(
               children: <Widget>[
-                const SGcomponenteMedico(
-                  crm: '12345',
-                  endereco: 'Av.Ipiranga, 264/ Ap.1020',
-                  especialidade: 'Nutrologista',
-                  nome: 'Dr. Rafael da Silva',
+                SGcomponenteMedico(
+                  crm: viewmodel.getCrm(),
+                  endereco: viewmodel.getAdress(),
+                  especialidade: viewmodel.getExpertise(),
+                  nome: viewmodel.getname(),
                   rqe: 'RQE 12345',
                 ),
                 const Divider(
@@ -171,7 +174,8 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 16),
                                 child: VariableTextPinkButton(
-                                  onPressed: () => viewmodel.nextScreen(context),
+                                  onPressed: () =>
+                                      viewmodel.nextScreen(context),
                                   text: 'Google Drive',
                                 ),
                               ),
@@ -189,6 +193,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
       ),
     );
   }
+
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
         context: context,

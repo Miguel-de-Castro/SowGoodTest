@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/models/default_view_state.dart';
+import 'package:sow_good/models/doctor.dart';
+import 'package:sow_good/services/doctor_service.dart';
 import '../models/health_insurance.dart';
 import '../views/screens/profile_doctor.dart';
 
-class ProfileDoctorViewmodel extends ChangeNotifier{
-
+class ProfileDoctorViewmodel extends ChangeNotifier {
   DefaultViewState state = DefaultViewState.started;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<HealthInsurance> healthInsurances = [
     const HealthInsurance(
         name: 'Bradesco',
@@ -31,7 +31,57 @@ class ProfileDoctorViewmodel extends ChangeNotifier{
     print("nextScreen");
   }
 
-  void openMaterials() async {
+  void openMaterials() async {}
 
+  Map<String, dynamic> doctor = {};
+
+  String name = 'caiu pré leitura';
+  String crm = 'caiu pré leitura';
+  String expertise = 'caiu pré leitura';
+  String adress = 'caiu pré leitura';
+  String description = 'caiu pré leitura';
+
+  Future<bool> getDoctorData() async {
+    update(DefaultViewState.loading);
+
+    doctor = await DoctorService().getDoctorFromPatient() ?? {};
+    Doctor current = Doctor.fromJson(doctor);
+    this.name = current.name ?? "-----Caiunaleituradaviewmodel";
+    this.crm = current.crm ?? "-----Caiunaleituradaviewmodel";
+    this.expertise = current.expertise ?? "-----Caiunaleituradaviewmodel";
+    this.adress = current.adress ?? "-----Caiunaleituradaviewmodel";
+    this.description = current.description ?? "-----Caiunaleituradaviewmodel";
+
+    print("name: " +
+        name +
+        " crm :" +
+        crm +
+        " expertise: " +
+        expertise +
+        " adress: " +
+        adress);
+
+    update(DefaultViewState.requestSucceed);
+    return true;
+  }
+
+  String getname() {
+    return name;
+  }
+
+  String getCrm() {
+    return crm;
+  }
+
+  String getExpertise() {
+    return expertise;
+  }
+
+  String getAdress() {
+    return adress;
+  }
+
+  String getDescritpion() {
+    return description;
   }
 }

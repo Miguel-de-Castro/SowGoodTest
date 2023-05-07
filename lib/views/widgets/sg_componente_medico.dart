@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 
 class SGcomponenteMedico extends StatefulWidget {
-  const SGcomponenteMedico({
+  SGcomponenteMedico({
     super.key,
     required this.nome,
     required this.especialidade,
