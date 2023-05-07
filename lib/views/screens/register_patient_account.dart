@@ -155,6 +155,63 @@ class _RegisterPatientAccountState extends State<RegisterPatientAccount> {
                               isPassword: true,
                             ),
                           ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: Text('*Deve conter 8 caracteres',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 12,
+                                      color: CustomColors.black,
+                                      fontWeight: FontWeight.normal)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: Text('*Deve conter uma letra maiúscula',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 12,
+                                      color: CustomColors.black,
+                                      fontWeight: FontWeight.normal)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: Text('*Deve conter um caractere especial',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 12,
+                                      color: CustomColors.black,
+                                      fontWeight: FontWeight.normal)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: Text('*Deve conter um número',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 12,
+                                      color: CustomColors.black,
+                                      fontWeight: FontWeight.normal)),
+                            ),
+                          ),
                         ],
                       ),
                     ),

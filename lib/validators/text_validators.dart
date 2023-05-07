@@ -26,12 +26,51 @@ class TextValidator {
     return null;
   }
 
-  static String? validatePassword(String value) {
-    String pattern = r'(?=.*[0-9a-zA-Z]).{6,}';
+ static String? validatePassword(String value) {
+    String pattern = r'(?=.*[0-9a-zA-Z]).{8,}';
     RegExp regExp = RegExp(pattern);
     if (!regExp.hasMatch(value)) {
-      return 'Senha inválida, precisa conter no mínimo 6 caracteres';
+      return 'Senha inválida, precisa conter no mínimo 8 caracteres';
     }
+    if (value == value.toLowerCase()) {
+      return 'Senha inválida, precisa conter no mínimo uma letra maiúscula';
+    }
+    if (value.replaceAll(RegExp(r'[0-9]'), '').length == value.length) {
+      return 'Senha inválida, precisa conter no mínimo um número';
+    }
+    if (value.replaceAll(RegExp(r'[!@#\$&*~]'), '').length == value.length) {
+      return 'Senha inválida, precisa conter no mínimo um caractere especial';
+    }
+    return null;
+}
+
+  static String? validateCPF(String cpf) {
+    cpf = cpf.replaceAll(RegExp(r'[^\d]'), '');
+
+    if (cpf.length != 11) {
+      return 'CPF Inválido, por favor escreva um CPF válido';
+    }
+
+    var soma = 0;
+    for (var i = 0; i < 9; i++) {
+      soma += int.parse(cpf[i]) * (10 - i);
+    }
+    var resto = (soma * 10) % 11;
+    var digito1 = (resto == 10) ? 0 : resto;
+    if (digito1 != int.parse(cpf[9])) {
+      return 'CPF Inválido, por favor escreva um CPF válido';
+    }
+
+    soma = 0;
+    for (var i = 0; i < 10; i++) {
+      soma += int.parse(cpf[i]) * (11 - i);
+    }
+    resto = (soma * 10) % 11;
+    var digito2 = (resto == 10) ? 0 : resto;
+    if (digito2 != int.parse(cpf[10])) {
+      return 'CPF Inválido, por favor escreva um CPF válido';
+    }
+
     return null;
   }
 }

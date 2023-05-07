@@ -143,7 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                         key: _formKey,
                         child: Column(children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, bottom: 15),
                             child: SGTextField(
                               controller: _emailController,
                               validator: TextValidator.validateRequired,
@@ -153,7 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 44),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, bottom: 44),
                             child: SGTextField(
                                 controller: _passwordController,
                                 validator: TextValidator.validateRequired,
