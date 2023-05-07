@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomTextStyles {
-  static TextStyle placeholder = GoogleFonts.roboto(fontSize: 16);
-  static TextStyle title = GoogleFonts.roboto(fontSize: 28);
-}
-
 class CustomTextStylesBuilder {
   Color? _color;
   double? _height;
@@ -14,7 +9,17 @@ class CustomTextStylesBuilder {
 
   TextStyle title() {
     TextStyle style = GoogleFonts.roboto(
-      fontSize: _fontSize,
+      fontSize: _fontSize ?? 28,
+      color: _color,
+      height: _height,
+      decoration: _decoration,
+    );
+    return style;
+  }
+
+  TextStyle subTitle() {
+    TextStyle style = GoogleFonts.roboto(
+      fontSize: _fontSize ?? 14,
       color: _color,
       height: _height,
       decoration: _decoration,
@@ -24,7 +29,7 @@ class CustomTextStylesBuilder {
 
   TextStyle placeholder() {
     TextStyle style = GoogleFonts.roboto(
-      fontSize: _fontSize,
+      fontSize: _fontSize ?? 16,
       color: _color,
       height: _height,
       decoration: _decoration,
