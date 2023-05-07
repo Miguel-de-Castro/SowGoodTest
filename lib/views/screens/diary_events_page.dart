@@ -59,73 +59,70 @@ class _DiaryEventsPageState extends State<DiaryEventsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: CustomColors.background,
-        appBar: AppBar(
-          leading: IconButton(
+    return Scaffold(
+      backgroundColor: CustomColors.background,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+            color: CustomColors.background,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(3),
+            child: Container(
+              color: CustomColors.patientPrimary,
+              height: 3,
+              width: double.infinity,
+            )),
+        centerTitle: true,
+        backgroundColor: CustomColors.patientPrimary,
+        title: Text(
+          'Diário',
+          style: CustomTextStylesBuilder()
+              .withColor(CustomColors.background)
+              .withSize(26)
+              .placeholder(),
+        ),
+        actions: <Widget>[
+          IconButton(
             icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 20,
+              Icons.add,
+              size: 30,
               color: CustomColors.background,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const CreateDiaryEvent();
+                },
+              ).then((value) => viewmodel.getDiaryEvents());
             },
-          ),
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(3),
-              child: Container(
-                color: CustomColors.patientPrimary,
-                height: 3,
-                width: double.infinity,
-              )),
-          centerTitle: true,
-          backgroundColor: CustomColors.patientPrimary,
-          title: Text(
-            'Diário',
-            style: CustomTextStylesBuilder()
-                .withColor(CustomColors.background)
-                .withSize(26)
-                .placeholder(),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.add,
-                size: 30,
-                color: CustomColors.background,
-              ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const CreateDiaryEvent();
-                  },
-                ).then((value) => viewmodel.getDiaryEvents());
-              },
-            )
-          ],
-        ),
-        body: ListView.separated(
-            itemBuilder: (BuildContext context, int index) {
-              print(viewmodel.diaryEvents.length);
-              DiaryEvents item = viewmodel.diaryEvents[index];
-              return DiaryComponent(
-                  title: item.title ?? '',
-                  date: item.date ?? '',
-                  description: item.description ?? '',
-                  link: item.link ?? '');
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(
-                  thickness: 0.5,
-                  indent: 20,
-                  endIndent: 20,
-                  color: CustomColors.graySubtitle,
-                ),
-            itemCount: viewmodel.diaryEvents.length),
+          )
+        ],
       ),
+      body: ListView.separated(
+          itemBuilder: (BuildContext context, int index) {
+            print(viewmodel.diaryEvents.length);
+            DiaryEvents item = viewmodel.diaryEvents[index];
+            return DiaryComponent(
+                title: item.title ?? '',
+                date: item.date ?? '',
+                description: item.description ?? '',
+                link: item.link ?? '');
+          },
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+                thickness: 0.5,
+                indent: 20,
+                endIndent: 20,
+                color: CustomColors.graySubtitle,
+              ),
+          itemCount: viewmodel.diaryEvents.length),
     );
   }
 

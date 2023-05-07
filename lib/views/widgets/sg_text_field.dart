@@ -141,7 +141,7 @@ class _SGTextFieldState extends State<SGTextField> {
                 : null,
         hintText: widget.placeholder,
         hintStyle: CustomTextStylesBuilder()
-            .withColor(CustomColors.graySubtitle)
+            .withColor(CustomColors.grayPlaceholder)
             .placeholder(),
         border: InputBorder.none,
         errorStyle: const TextStyle(height: 0),
