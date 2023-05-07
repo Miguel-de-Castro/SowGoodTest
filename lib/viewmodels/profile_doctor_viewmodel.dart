@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sow_good/models/default_view_state.dart';
 import 'package:sow_good/models/doctor.dart';
-import 'package:sow_good/services/doctor_service.dart';
+import 'package:sow_good/services/patient_service.dart';
 import '../models/health_insurance.dart';
 import '../views/screens/profile_doctor.dart';
 
@@ -35,31 +35,24 @@ class ProfileDoctorViewmodel extends ChangeNotifier {
 
   Map<String, dynamic> doctor = {};
 
-  String name = 'caiu pré leitura';
-  String crm = 'caiu pré leitura';
-  String expertise = 'caiu pré leitura';
-  String adress = 'caiu pré leitura';
-  String description = 'caiu pré leitura';
+  String name = ' ';
+  String crm = ' ';
+  String expertise = ' ';
+  String adress = ' ';
+  String description = ' ';
+  String rqe = ' ';
 
   Future<bool> getDoctorData() async {
     update(DefaultViewState.loading);
 
-    doctor = await DoctorService().getDoctorFromPatient() ?? {};
+    doctor = await PatientService().getDoctorFromPatient() ?? {};
     Doctor current = Doctor.fromJson(doctor);
     this.name = current.name ?? "-----Caiunaleituradaviewmodel";
     this.crm = current.crm ?? "-----Caiunaleituradaviewmodel";
     this.expertise = current.expertise ?? "-----Caiunaleituradaviewmodel";
-    this.adress = current.adress ?? "-----Caiunaleituradaviewmodel";
+    this.adress = current.address ?? "-----Caiunaleituradaviewmodel";
     this.description = current.description ?? "-----Caiunaleituradaviewmodel";
-
-    print("name: " +
-        name +
-        " crm :" +
-        crm +
-        " expertise: " +
-        expertise +
-        " adress: " +
-        adress);
+    this.rqe = current.rqe ?? "-----Caiunaleituradaviewmodel";
 
     update(DefaultViewState.requestSucceed);
     return true;
@@ -81,7 +74,11 @@ class ProfileDoctorViewmodel extends ChangeNotifier {
     return adress;
   }
 
-  String getDescritpion() {
+  String getDescription() {
     return description;
+  }
+
+  String getRqe() {
+    return rqe;
   }
 }

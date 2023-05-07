@@ -4,21 +4,24 @@ class Doctor {
     this.description,
     this.name,
     this.expertise,
-    this.adress,
+    this.address,
+    this.rqe,
   });
 
   String? crm;
   String? description;
   String? name;
   String? expertise;
-  String? adress;
+  String? address;
+  String? rqe;
 
   factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
         crm: json['crm'],
         description: json['description'],
         name: json['name'],
         expertise: json['expertise'],
-        adress: json['adress'],
+        address: json['address'],
+        rqe: json['rqe'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +29,7 @@ class Doctor {
         'name': name,
         'description': description,
         'expertise': expertise,
-        'adress': adress,
+        'adress': address,
+        'rqe': rqe,
       };
 }

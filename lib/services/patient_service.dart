@@ -71,4 +71,22 @@ class PatientService {
     }
     return decodeError(response.body);
   }
+
+  Future<Map<String, dynamic>?> getDoctorFromPatient() async {
+    final String? token = await AuthService().refreshToken();
+
+    final http.Response response =
+        await http.get(Uri.parse(ApiConstants.doctor), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      return jsonData;
+    } else if (response.statusCode == 404) {
+      return null;
+    } else {
+      throw Exception('Failed to get doctor data');
+    }
+  }
 }

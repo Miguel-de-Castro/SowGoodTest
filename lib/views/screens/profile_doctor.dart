@@ -74,7 +74,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                   endereco: viewmodel.getAdress(),
                   especialidade: viewmodel.getExpertise(),
                   nome: viewmodel.getname(),
-                  rqe: 'RQE 12345',
+                  rqe: 'RQE ${viewmodel.getRqe()}',
                 ),
                 const Divider(
                   thickness: 2,
@@ -88,7 +88,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                         alignment: Alignment.topLeft,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
+                          children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(bottom: 13, top: 20),
                               child: Text(
@@ -102,7 +102,7 @@ class _ProfileDoctorState extends State<ProfileDoctor> {
                             Padding(
                               padding: EdgeInsets.only(bottom: 16),
                               child: Text(
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque egestas urna nibh, ut fringilla mi hendrerit id. Donec posuere libero at feugiat tincidunt. Vestibulum a blandit sapien. Integer tempus quam dui, ut dignissim nisl eleifend sed. In vitae est eu purus gravida tincidunt eu quis augue. Mauris hendrerit scelerisque dignissim.',
+                                viewmodel.getDescription(),
                                 style:
                                     TextStyle(color: CustomColors.graySubtitle),
                               ),
