@@ -1,41 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:sow_good/validators/text_validators.dart';
 import 'package:sow_good/views/design_tokens/custom_colors.dart';
 import 'package:sow_good/views/design_tokens/custom_text_styles.dart';
-import 'package:sow_good/views/widgets/button.dart';
-import 'package:sow_good/views/widgets/sg_text_area.dart';
-import 'package:sow_good/views/widgets/sg_text_field.dart';
 import 'package:sow_good/views/modals/diary_event.dart';
 import 'package:sow_good/views/widgets/sg_diary_component.dart';
 
-class DiaryEvents extends StatefulWidget {
-  const DiaryEvents({super.key});
+import '../../models/default_view_state.dart';
+import '../../models/diary_events.dart';
+import '../../viewmodels/diary_events_viewmodel.dart';
+import '../widgets/sg_loader.dart';
+
+class DiaryEventsPage extends StatefulWidget {
+  const DiaryEventsPage({super.key});
 
   @override
-  State<DiaryEvents> createState() => _DiaryEventsState();
+  State<DiaryEventsPage> createState() => _DiaryEventsPageState();
 }
 
-class _DiaryEventsState extends State<DiaryEvents> {
+class _DiaryEventsPageState extends State<DiaryEventsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-// Trocar por chamada do back
-  static const List<Map<String, String>> conteudo = [
-    {'title': 'Título', 'message': 'Largou a chupeta', 'type': 'text'},
-    {
-      'title': 'Data do ocorrido',
-      'type': 'data',
-    },
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'},
-    {'title': 'Descrição', 'message': 'A criança nessa semana', 'type': 'text'}
-  ];
+  final DiaryEventsViewmodel viewmodel = DiaryEventsViewmodel();
 
   double displayHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
@@ -45,8 +28,33 @@ class _DiaryEventsState extends State<DiaryEvents> {
     return MediaQuery.of(context).size.width;
   }
 
-  void nextScreen() {
-    if (_formKey.currentState!.validate()) {}
+  void loadData() {
+    setState(() {
+      switch (viewmodel.state) {
+        case DefaultViewState.loading:
+          _dialogBuilder(context);
+          break;
+        case DefaultViewState.requestSucceed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.requestFailed:
+          Navigator.pop(context);
+          break;
+        case DefaultViewState.started:
+          break;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    viewmodel.addListener(() {
+      loadData();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewmodel.getDiaryEvents();
+    });
   }
 
   @override
@@ -91,8 +99,8 @@ class _DiaryEventsState extends State<DiaryEvents> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) {
-                    return CreateDiaryEvent();
+                  builder: (BuildContext context) {
+                    return const CreateDiaryEvent();
                   },
                 );
               },
@@ -101,11 +109,13 @@ class _DiaryEventsState extends State<DiaryEvents> {
         ),
         body: ListView.separated(
             itemBuilder: (BuildContext context, int index) {
-              Map<String, String> item = conteudo[index];
+              print(viewmodel.diaryEvents.length);
+              DiaryEvents item = viewmodel.diaryEvents[index];
               return DiaryComponent(
-                  title: item['title'] ?? '',
-                  description: item['message'] ?? '',
-                  link: item['type'] ?? '');
+                  title: item.title ?? '',
+                  date: item.date ?? '',
+                  description: item.description ?? '',
+                  link: item.link ?? '');
             },
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(
@@ -114,8 +124,17 @@ class _DiaryEventsState extends State<DiaryEvents> {
                   endIndent: 20,
                   color: CustomColors.graySubtitle,
                 ),
-            itemCount: conteudo.length),
+            itemCount: viewmodel.diaryEvents.length),
       ),
     );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const sgLoader();
+        });
   }
 }

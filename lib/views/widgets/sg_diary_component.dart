@@ -8,12 +8,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DiaryComponent extends StatefulWidget {
   final String title;
+  final String date;
   final String description;
   final String link;
 
   const DiaryComponent(
       {Key? key,
       required this.title,
+      required this.date,
       required this.description,
       required this.link})
       : super(key: key);
@@ -23,14 +25,6 @@ class DiaryComponent extends StatefulWidget {
 }
 
 class _DiaryComponentState extends State<DiaryComponent> {
-  late String _formattedDate;
-
-  @override
-  void initState() {
-    super.initState();
-    _formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -70,7 +64,7 @@ class _DiaryComponentState extends State<DiaryComponent> {
                       ),
                     ),
                     Text(
-                      '$_formattedDate - ${widget.description}',
+                      '${widget.date} - ${widget.description}',
                       style: CustomTextStylesBuilder()
                           .withColor(CustomColors.graySubtitle)
                           .withSize(14)

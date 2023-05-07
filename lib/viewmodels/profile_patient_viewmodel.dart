@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sow_good/models/default_view_state.dart';
 import 'package:sow_good/services/patient_service.dart';
+import 'package:sow_good/views/screens/diary_events_page.dart';
 import '../services/auth_service.dart';
 import '../views/screens/profile_doctor.dart';
-import '../views/screens/diary_events.dart';
 
 class ProfilePatientViewmodel extends ChangeNotifier {
   DefaultViewState state = DefaultViewState.started;
@@ -27,7 +27,7 @@ class ProfilePatientViewmodel extends ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => const DiaryEvents(),
+          builder: (BuildContext context) => const DiaryEventsPage(),
         ));
   }
 }
