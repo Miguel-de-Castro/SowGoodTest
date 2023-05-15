@@ -5,21 +5,44 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Sow Good Local",
+            "name": "Sow Good Local Pacient",
             "request": "launch",
             "type": "dart",
             "args": [
                 "--dart-define",
                 "BASE_URL=http://localhost:8080/api/v1",
+                "PATIENCE=1"
               ]
         },
         {
-            "name": "Sow Good Dev",
+            "name": "Sow Good Dev Pacient",
             "request": "launch",
             "type": "dart",
             "args": [
                 "--dart-define",
                 "BASE_URL=https://sowgood.duckdns.org/api/v1",
+                "PATIENCE=1"
+
+              ]
+        },
+        {
+            "name": "Sow Good Local Doctor",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define",
+                "BASE_URL=http://localhost:8080/api/v1",
+                "DOCTOR=1"
+              ]
+        },
+        {
+            "name": "Sow Good Dev Doctor",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define",
+                "BASE_URL=https://sowgood.duckdns.org/api/v1",
+                "DOCTOR=1"
               ]
         }
     ]
